@@ -1,8 +1,13 @@
 <?
-$name = "Anthony";
-$age = 35;
-$salary_point = 280;
-$salary_point_per = 16.5;
-$salary = $salary_point * $salary_point_per;
+$arr = [
+    "One"=>"Jame",
+    "Two"=>"Hardm",
+    "Thr"=>"sumjon"];
 
-echo "My Name is $name, Age is $age, Salary is $salary";
+foreach($arr as $key=>$value){
+    echo <<<_END
+    <ul>
+        <li>The key $key and The value $value</li>
+    </ul>
+    _END;
+}
