@@ -1,6 +1,12 @@
 <?php
-var_dump($_GET);
-var_dump($_GET['val']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $val = $_POST['val'];
+    $val2 = $_POST['val2'];
+
+    echo $val;
+    echo $val2;
+}
 
     ?>
 <!DOCTYPE html>
@@ -10,7 +16,7 @@ var_dump($_GET['val']);
     <title>Form</title>
 </head>
 <body>
-    <form action="">
+    <form method="post">
         <input type="text" name="val">
         <input type="text" name="val2">
         <button>send</button>
