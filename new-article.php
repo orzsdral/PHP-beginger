@@ -9,9 +9,9 @@
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
         //取得表單資料
-        $title = $_POST['title'];
-        $content = $_POST['content'];
-        $published_at = $_POST['published_at'];
+        $title = htmlspecialchars($_POST['title']);
+        $content = htmlspecialchars($_POST['content']);
+        $published_at = htmlspecialchars($_POST['published_at']);
 
         //檢查是否有輸入標題、內容、日期
         if(empty($title)){
@@ -29,10 +29,10 @@
             //建立與資料庫的連線
             $conn = getDB();
             
-            //取得表單資料
-            $title = $_POST['title'];
-            $content = $_POST['content'];
-            $published_at = $_POST['published_at'];
+            // //取得表單資料  上半部有相同設定 不需重複
+            // $title = $_POST['title'];
+            // $content = $_POST['content'];
+            // $published_at = $_POST['published_at'];
 
 
             //加入try-catch來捕捉錯誤 不直接進入500錯誤頁面
