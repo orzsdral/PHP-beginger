@@ -14,7 +14,7 @@
     //抓取資料庫的資料
     $sql = 'SELECT * 
             FROM article
-            WHERE id = 1';
+            WHERE id = ' . $_GET['id'];
 
     $results = mysqli_query($conn, $sql);
     //判斷$result===false,代表SQL語法有誤
