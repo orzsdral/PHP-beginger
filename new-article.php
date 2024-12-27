@@ -9,16 +9,25 @@
         $content = $_POST['content'];
         $published_at = $_POST['published_at'];
 
-        //寫入資料庫
-        $sql = "INSERT INTO article(title, content, published_at)
-                VALUES('$title', '$content', '$published_at')";
-        $results = mysqli_query($conn, $sql);
-        //判斷$result===false,代表SQL語法有誤
-        if($results === false){
-            //顯示錯誤訊息
-            echo mysqli_error($conn);
+
+        //加入try-catch來捕捉錯誤 不直接進入500錯誤頁面
+        try{
+            //寫入資料庫
+            $sql = "INSERT INTO article(title, content, published_at)
+                    VALUES('$title', '$content', '$published_at')";
+            $results = mysqli_query($conn, $sql);
+
+            if($results === false){
+                echo mysqli_error($conn);
+            }
+        }
+        catch(Exception $e){
+            //添增新增失敗,請重新輸入 並重載頁面
+            echo "<script>alert('新增失敗,請重新輸入');</script>";
+            header("Refresh:0.1; url=new-article.php");
             exit;
         }
+      
         //mysqli_insert_id()函數返回上一個查詢中自動生成的ID
         $id = mysqli_insert_id($conn);
         echo "Inserted article with id: $id";
