@@ -2,15 +2,25 @@
     //引入db.php
     require_once('includes/db.php');
     $errors=[];//錯誤訊息集
+    //初始化變數
+    $title = '';//標題
+    $content = '';//內容
+    $published_at = '';//日期
+
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        //取得表單資料
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $published_at = $_POST['published_at'];
+
         //檢查是否有輸入標題、內容、日期
-        if(empty($_POST['title'])){
+        if(empty($title)){
             $errors[] = 'Title is required';
         }
-        if(empty($_POST['content'])){
+        if(empty($content)){
             $errors[] = 'Content is required';
         }
-        if(empty($_POST['published_at'])){
+        if(empty($published_at)){
             $errors[] = 'Published at is required';
         }
 
@@ -79,14 +89,16 @@
         標題:
         <label for="title">
             <!-- 因要練習後端驗證，先去除required設定 -->
-            <input type="text" name="title" id="title" placeholder="Article title">
+             <!-- 設定Value為$title來保留直 -->
+            <input type="text" name="title" id="title" placeholder="Article title" value="<?= $title?>">
         </label>
     </div>
     <br>
     <div>
         內容:
         <label for="content">
-            <textarea name="content" id="content" rows='10' cols='30' placeholder="Article content"></textarea>
+            <!-- 設定$content保留直 -->
+            <textarea name="content" id="content" rows='10' cols='30' placeholder="Article content"><?= $content?></textarea>
         </label>
     </div>
     <br>
@@ -94,7 +106,8 @@
         日期:
         <label for="published_at">
             <!-- 因要練習後端驗證，先去除required設定 -->
-            <input type="datetime" name="published_at" id="published_at">
+             <!-- 設定$published_at保留直 -->
+            <input type="datetime" name="published_at" id="published_at" value="<?= $published_at?>">   
         </label>
     </div>
     <br>
