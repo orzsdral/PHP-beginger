@@ -1,9 +1,10 @@
 <?php
-
+    //引入db.php
+    require_once('includes/db.php');
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        //引入db.php
-        require_once('includes/db.php');
-
+        //建立與資料庫的連線
+        $conn = getDB();
+        
         //取得表單資料
         $title = $_POST['title'];
         $content = $_POST['content'];

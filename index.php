@@ -1,6 +1,9 @@
 <?php
     //引入db.php
-    require_once('includes/db.php');       
+    require_once('includes/db.php'); 
+    //建立與資料庫的連線
+    $conn = getDB();
+    
     //抓取資料庫的資料
     $sql = 'SELECT * 
             FROM article';

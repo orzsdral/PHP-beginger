@@ -4,6 +4,9 @@
     
     //加入判斷Get來的id是否有值且為數字,此作法可避免使用者透過網址列來輸入非數字的值
     if(isset($_GET['id']) && is_numeric($_GET['id'])){
+        //建立與資料庫的連線
+        $conn = getDB();
+        
         //抓取資料庫的資料
         $sql = 'SELECT * 
                 FROM article
