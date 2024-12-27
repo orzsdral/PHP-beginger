@@ -1,16 +1,6 @@
 <?php
-    $db_host = 'localhost';
-    $db_user = 'Anthony';
-    $db_password = 'LIN';
-    $db_name = 'cms';
-
-    //建立與資料庫連線
-    $conn = mysqli_connect($db_host, $db_user, $db_password, $db_name);
-
-    //判斷$conn是否有物件回傳來，"有"就會值就為True;"沒有"就會回傳False，在用!來取反義
-    if(!$conn){
-        echo 'Connection error: ' . mysqli_connect_error();
-    }           
+//引入db.php
+   require_once('db.php');
     
     //加入判斷Get來的id是否有值且為數字,此作法可避免使用者透過網址列來輸入非數字的值
     if(isset($_GET['id']) && is_numeric($_GET['id'])){
@@ -33,22 +23,10 @@
         //若沒有id值或id值不是數字則顯示null
         $articles = null;
     }
-
-
 ?>
-<!DOCTYPE html>
-<html lang="zh-tw">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blog</title>
-</head>
-<body>
-    <!-- 標題 -->
-    <header>
-        <h1>My Blog</h1>
-    </header>
-    <!-- 讀取出陣列鍵和值 -->
+<?php require_once('header.php'); ?>
+
+
     <main>
         <!-- 因只有一行資料，故不需要foreach去結果集中撈資料 去除了ol/li/foreach-->
         <!-- 加入判斷如果數組是空的不能顯示///因改使用mysqli_fetch_assoc()若回傳無值會顯null因此更換判斷條件 -->
@@ -58,6 +36,5 @@
                     <h2><?php echo $articles['title']; ?></h2>
                     <p><?php echo $articles['content']; ?></p>
         <?php endif; ?>
-    </main>
-</body>
-</html>
+
+<?php require_once('footer.php'); ?>

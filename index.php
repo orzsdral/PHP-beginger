@@ -1,16 +1,6 @@
 <?php
-    $db_host = 'localhost';
-    $db_user = 'Anthony';
-    $db_password = 'LIN';
-    $db_name = 'cms';
-
-    //建立與資料庫連線
-    $conn = mysqli_connect($db_host, $db_user, $db_password, $db_name);
-
-    //判斷$conn是否有物件回傳來，"有"就會值就為True;"沒有"就會回傳False，在用!來取反義
-    if(!$conn){
-        echo 'Connection error: ' . mysqli_connect_error();
-    }           
+    //引入db.php
+    require_once('db.php');       
     //抓取資料庫的資料
     $sql = 'SELECT * 
             FROM article';
@@ -23,23 +13,9 @@
         exit;
     }
     $articles = mysqli_fetch_all($results, MYSQLI_ASSOC);
-
-
 ?>
-<!DOCTYPE html>
-<html lang="zh-tw">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blog</title>
-</head>
-<body>
-    <!-- 標題 -->
-    <header>
-        <h1>My Blog</h1>
-    </header>
-    <!-- 讀取出陣列鍵和值 -->
-    <main>
+<?php require_once('header.php'); ?>
+
         <ol>
         <!-- 加入判斷如果數組是空的不能顯示 -->
         <?php if(empty($articles)): ?>
@@ -53,6 +29,6 @@
             <?php endforeach; ?>
         <?php endif; ?>
         </ol>
-    </main>
-</body>
-</html>
+
+
+<?php require_once('footer.php'); ?>
