@@ -1,6 +1,6 @@
 <?php
     //引入db.php
-    require_once('db.php');       
+    require_once('includes/db.php');       
     //抓取資料庫的資料
     $sql = 'SELECT * 
             FROM article';
@@ -14,7 +14,7 @@
     }
     $articles = mysqli_fetch_all($results, MYSQLI_ASSOC);
 ?>
-<?php require_once('header.php'); ?>
+<?php require_once('includes/header.php'); ?>
 
         <ol>
         <!-- 加入判斷如果數組是空的不能顯示 -->
@@ -31,4 +31,4 @@
         </ol>
 
 
-<?php require_once('footer.php'); ?>
+<?php require_once('includes/footer.php'); ?>

@@ -1,6 +1,6 @@
 <?php
 //引入db.php
-   require_once('db.php');
+   require_once('includes/db.php');
     
     //加入判斷Get來的id是否有值且為數字,此作法可避免使用者透過網址列來輸入非數字的值
     if(isset($_GET['id']) && is_numeric($_GET['id'])){
@@ -24,7 +24,7 @@
         $articles = null;
     }
 ?>
-<?php require_once('header.php'); ?>
+<?php require_once('includes/header.php'); ?>
 
 
     <main>
@@ -37,4 +37,4 @@
                     <p><?php echo $articles['content']; ?></p>
         <?php endif; ?>
 
-<?php require_once('footer.php'); ?>
+<?php require_once('includes/footer.php'); ?>
