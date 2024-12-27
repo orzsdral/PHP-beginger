@@ -20,29 +20,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <!-- 設定表單方式為post -->
     <form method="post">
-        <input type="text" name="val">
-        <input type="email" name="mail">
-        <input type="submit" name="submit">
-        <input type="number" name="number">
-        <input type="password" name="password">
-        <input type="date" name="date">
-        <input type="time" name="time">
-        <input type="url" name="url">
-        <input type="tel" name="tel">
-        <input type="color" name="color">
-        <input type="range" name="range">
-        <input type="file" name="file">
-        <input type="hidden" name="hidden">
-        <input type="submit" name="submit">
-        <input type="reset" name="reset">
-        <input type="radio" name="radio">
-        <input type="checkbox" name="checkbox">
-        <input type="image" name="image">
-        <input type="button" name="button">
-        <input type="datetime-local" name="datetime-local">
-        <input type="month" name="month">
-        <input type="week" name="week">
-        <input type="other" name="other">
+        <div>
+            POSC
+            <input type="postcode" name="posc" placeholder="請輸入郵遞區號"
+                   pattern="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}" 
+                   title="請輸入正確的郵遞區號"> 
+        </div>
+        <br>
+        <div>
+            EMAIL
+            <input type="email" name="email" placeholder="請輸入email" required>
+        </div>
+        <br>
+        <div>
+            NUMBER
+            <input type="number" name="number" placeholder="請輸入數字" min="1" max="10">
+        </div>
+        <br>
+            <button>send</button>
     </form>
 </body>
 </html>
