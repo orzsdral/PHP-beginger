@@ -20,21 +20,24 @@
         if(empty($content)){
             $errors[] = 'Content is required';
         }
-        if(empty($published_at)){
-            $errors[] = 'Published at is required';
+        //檢查日期格式是否正確
+        if(!empty($published_at)){
+            //date_create_from_format()函數從指定的格式創建一個新的日期時間,若格式不正確會回傳false 
+           if(!date_create_from_format('Y-m-d H:i:s', $published_at)){
+                $errors[] = 'Invalid date and time';
+           }else{
+            //反之，若格式正確，則進一步檢查日期是否正確 date_get_last_errors()函數返回最後一次日期/時間解析的錯誤信息關聯陣列
+            $date_errors = date_get_last_errors();
+            if($date_errors['warning_count'] > 0){
+                $errors[] = 'Invalid date and time';
+            }
+           }
         }
 
         //若無錯誤訊息，則執行以下程式碼
         if(empty($errors)){
             //建立與資料庫的連線
             $conn = getDB();
-            
-            // //取得表單資料  上半部有相同設定 不需重複
-            // $title = $_POST['title'];
-            // $content = $_POST['content'];
-            // $published_at = $_POST['published_at'];
-
-
             //加入try-catch來捕捉錯誤 不直接進入500錯誤頁面
             try{
                 //用佔位數來防止SQL注入
