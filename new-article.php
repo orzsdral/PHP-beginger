@@ -23,6 +23,7 @@
                 exit;
             }else{
                 //mysqli_stmt_bind_param()函數將變量綁定到準備好的語句中
+                // s 代表 string i 代表 integer d 代表 double b 代表 blob
                 mysqli_stmt_bind_param($stmt, "sss", $title, $content, $published_at);
                 //mysqli_stmt_execute()函數執行準備好的語句
                 if(!mysqli_stmt_execute($stmt)){
