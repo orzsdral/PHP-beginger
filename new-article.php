@@ -12,25 +12,37 @@
 
         //加入try-catch來捕捉錯誤 不直接進入500錯誤頁面
         try{
-            //寫入資料庫
+            //用佔位數來防止SQL注入
             $sql = "INSERT INTO article(title, content, published_at)
-                    VALUES('$title', '$content', '$published_at')";
-            $results = mysqli_query($conn, $sql);
-
-            if($results === false){
+                    VALUES(?, ?, ?)";
+            //$results = mysqli_query($conn, $sql);
+            //mysqli_prepare()函數準備要執行的SQL語句
+            $stmt = mysqli_prepare($conn, $sql);
+            if($stmt === false){
                 echo mysqli_error($conn);
+                exit;
+            }else{
+                //mysqli_stmt_bind_param()函數將變量綁定到準備好的語句中
+                mysqli_stmt_bind_param($stmt, "sss", $title, $content, $published_at);
+                //mysqli_stmt_execute()函數執行準備好的語句
+                if(!mysqli_stmt_execute($stmt)){
+                    echo mysqli_stmt_error($stmt);
+                    exit; 
+                }
+
+            //mysqli_insert_id()函數返回上一個查詢中自動生成的ID
+            $id = mysqli_insert_id($conn);
+            //判斷是否有插入成功 
+            echo "Inserted article with id: $id";
             }
         }
         catch(Exception $e){
-            //添增新增失敗,請重新輸入 並重載頁面
             echo "<script>alert('新增失敗,請重新輸入');</script>";
-            header("Refresh:0.1; url=new-article.php");
-            exit;
+            //無須另外設定也會轉回new-article.php
+            //header('Location: new-article.php');
         }
       
-        //mysqli_insert_id()函數返回上一個查詢中自動生成的ID
-        $id = mysqli_insert_id($conn);
-        echo "Inserted article with id: $id";
+        
     }
       
 ?>
