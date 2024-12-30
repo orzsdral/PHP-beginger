@@ -19,6 +19,7 @@
 ?>
 <?php require_once('includes/header.php'); ?>
 
+        <a href="new-article.php">新增文章</a>
         <ol>
         <!-- 加入判斷如果數組是空的不能顯示 -->
         <?php if(empty($articles)): ?>
