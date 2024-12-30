@@ -36,8 +36,8 @@
         <?php if($articles === null): ?>
             No articles found.
         <?php else: ?>
-                    <h2><?php echo $articles['title']; ?></h2>
-                    <p><?php echo $articles['content']; ?></p>
+                    <h2><?= htmlspecialchars($articles['title']) ?></h2>
+                    <p><?= htmlspecialchars($articles['content']) ?></p>
         <?php endif; ?>
 
 <?php require_once('includes/footer.php'); ?>
