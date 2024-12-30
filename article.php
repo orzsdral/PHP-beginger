@@ -23,8 +23,12 @@
         <?php if($articles === null): ?>
             No articles found.
         <?php else: ?>
+                <article>
                     <h2><?= htmlspecialchars($articles['title']) ?></h2>
                     <p><?= htmlspecialchars($articles['content']) ?></p>
+                </article>
+
+                <a href="edit-article.php?id=<?= $articles['id'];?>">編輯文章</a>
         <?php endif; ?>
 
 <?php require_once('includes/footer.php'); ?>
