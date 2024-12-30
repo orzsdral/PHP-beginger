@@ -4,13 +4,14 @@
  * 
  * @param object $conn 連接資料庫
  * @param integer $id 文章 ID
+ * @param string $columns 要選取的欄位,預設為所有欄位
  * 
  * @return assoc_array The article record with that ID,or null if not found
  */
-Function getArticle($conn, $id){
-    $sql ='SELECT *
+Function getArticle($conn, $id, $columns='*'){
+    $sql ="SELECT $columns
          FROM article
-         WHERE id = ?';
+         WHERE id = ?";
 
     $stmt = mysqli_prepare($conn, $sql);
     if($stmt === false){

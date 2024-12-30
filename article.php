@@ -29,9 +29,7 @@
                 </article>
 
                 <a href="edit-article.php?id=<?= $articles['id'];?>">編輯文章</a>
-                <form method="post" action="delete-article.php?id=<?= $articles['id']?>">
-                    <button>刪除文章</button>
-                </form>
+                <a href="delete-article.php?id=<?= $articles['id'];?>">刪除文章</a>
         <?php endif; ?>
 
 <?php require_once('includes/footer.php'); ?>
