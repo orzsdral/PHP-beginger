@@ -1,9 +1,10 @@
 <?php
-    //引入db.php/article.php
+    //引入db.php/article.php/url.php
     require_once('includes/db.php');
     require_once('includes/article.php');
-    //因empty函數關係不需在初始化$errors
-    // $errors = [];
+    require_once('includes/url.php');
+
+  
     //初始化變數
     $title = '';//標題
     $content = '';//內容
@@ -29,7 +30,7 @@
                 //用佔位數來防止SQL注入
                 $sql = "INSERT INTO article(title, content, published_at)
                         VALUES(?, ?, ?)";
-                //$results = mysqli_query($conn, $sql);
+
                 //mysqli_prepare()函數準備要執行的SQL語句
                 $stmt = mysqli_prepare($conn, $sql);
                 if($stmt === false){
@@ -45,18 +46,10 @@
                         exit; 
                     }
 
-                //mysqli_insert_id()函數返回上一個查詢中自動生成的ID
-                $id = mysqli_insert_id($conn);
-
-                //檢查伺服器是否使用http或https協議標準方式
-                if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'){
-                    $protocol = 'https';
-                }else{
-                    $protocol = 'http';
-                }
-                //header()函數用於向瀏覽器發送特定的HTTP標頭
-                header("Location: $protocol://". $_SERVER['HTTP_HOST'] . "/PHP-beginger/article.php?id=$id");
-                exit;
+                    //mysqli_insert_id()函數返回上一個查詢中自動生成的ID
+                    $id = mysqli_insert_id($conn);
+                    redirect("/PHP-beginger/article.php?id=$id");
+                    
                 }
             }
             catch(Exception $e){
