@@ -79,52 +79,11 @@
       
         
     }
-      
-?>
-<?php require_once('includes/header.php'); ?>
 
-    <h2>New article</h2>    
+require_once('includes/header.php');
 
-    <form method="post">
-        <!-- 若有錯誤訊息，則顯示 -->
-    <?php if(!empty($errors)): ?>
-        <ul>
-            <?php foreach($errors as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    <?php endif; ?>
-    <div>
-        <!-- 因要練習邏輯需要 先移除前端required來增強後端卡控 -->
-        標題:
-        <label for="title">
-            <!-- 設定Value為$title來保留直 -->
-            <input type="text" name="title" id="title" placeholder="Article title" value="<?= $title?>">
-        </label>
-    </div>
-    <br>
-    <div>
-        內容:
-        <label for="content">
-            <!-- 設定$content保留直 -->
-            <textarea name="content" id="content" rows='10' cols='30' placeholder="Article content"><?= $content?></textarea>
-        </label>
-    </div>
-    <br>
-    <div>
-        日期:
-        <label for="published_at">
-            <!-- 因要練習邏輯需要 先移除前端required來增強後端卡控 -->
-             <!-- 設定$published_at保留直 -->
-            <input type="datetime" name="published_at" id="published_at" value="<?= $published_at?>">
-        </label>
-    </div>
-    <br>
+   echo "<h2>新增文章</h2>";    
 
-    <div>
-        <button>添加</button>
-    </div>
+require_once('includes/form.php');    
 
-    </form>
-
-<?php require_once('includes/footer.php'); ?>
+require_once('includes/footer.php'); ?>
