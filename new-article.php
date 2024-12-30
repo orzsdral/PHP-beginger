@@ -1,10 +1,16 @@
 <?php
-    //引入db.php/article.php/url.php
+    //引入db.php/article.php/url.php/auth.php
     require_once('includes/db.php');
     require_once('includes/article.php');
     require_once('includes/url.php');
-
+    require_once('includes/auth.php');
   
+session_start();
+//檢查是否登入
+if(!isLoggedIn()){
+    die('請先登入');
+}
+
     //初始化變數
     $title = '';//標題
     $content = '';//內容
