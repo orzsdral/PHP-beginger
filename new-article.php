@@ -49,7 +49,11 @@
                 $id = mysqli_insert_id($conn);
 
                 //檢查伺服器是否使用http或https協議標準方式
-                $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https' : 'http';
+                if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'){
+                    $protocol = 'https';
+                }else{
+                    $protocol = 'http';
+                }
                 //header()函數用於向瀏覽器發送特定的HTTP標頭
                 header("Location: $protocol://". $_SERVER['HTTP_HOST'] . "/PHP-beginger/article.php?id=$id");
                 exit;

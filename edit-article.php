@@ -14,6 +14,7 @@
           die("文章未發現");
         }
         //取得文章資訊
+        $id = $articles['id'];
         $title = $articles['title'];
         $content = $articles['content'];
         $published_at = $articles['published_at'];
@@ -38,7 +39,30 @@
        
         //若錯誤陣列為空 則執行
         if(empty($errors)){
-            die("驗證成功");
+            //更新文章
+            $sql = "UPDATE article
+                    SET title = ?, content = ?, published_at = ?
+                    WHERE id = ?";
+
+            $stmt = mysqli_prepare($conn, $sql);
+            if($stmt === false){
+                echo mysqli_error($conn);
+                exit;
+            }else{
+                mysqli_stmt_bind_param($stmt, "sssi", $title, $content, $published_at, $id);
+                
+                if(mysqli_stmt_execute($stmt)){
+                     //檢查伺服器是否使用http或https協議標準方式
+                    if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'){
+                        $protocol = 'https';
+                    }else{
+                        $protocol = 'http';
+                    }
+                    //header()函數用於向瀏覽器發送特定的HTTP標頭
+                    header("Location: $protocol://". $_SERVER['HTTP_HOST'] . "/PHP-beginger/article.php?id=$id");
+                    exit;
+                }
+            }
         }
     }
 
