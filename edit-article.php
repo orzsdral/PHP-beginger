@@ -24,6 +24,24 @@
         die("id 不存在, 文章未發現");
     }
 
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+           
+        //取得表單資料
+        $title = htmlspecialchars($_POST['title']);
+        $content = htmlspecialchars($_POST['content']);
+        $published_at = htmlspecialchars($_POST['published_at']);
+        
+        //驗證表單資料
+        $errors = ValidateArticle($title, $content, $published_at);
+       
+       
+        //若錯誤陣列為空 則執行
+        if(empty($errors)){
+            die("驗證成功");
+        }
+    }
+
 require_once('includes/header.php');
     echo "<h2>編輯文章</h2>";
 require_once('includes/form.php');

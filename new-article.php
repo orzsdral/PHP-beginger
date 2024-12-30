@@ -1,7 +1,9 @@
 <?php
-    //引入db.php
+    //引入db.php/article.php
     require_once('includes/db.php');
-    $errors = [];
+    require_once('includes/article.php');
+    //因empty函數關係不需在初始化$errors
+    // $errors = [];
     //初始化變數
     $title = '';//標題
     $content = '';//內容
@@ -13,34 +15,17 @@
         $content = htmlspecialchars($_POST['content']);
         $published_at = htmlspecialchars($_POST['published_at']);
         
-        //增檢查是否有空值
-        if(empty($_POST['title'])){
-            $errors[] = '標題須填寫';
-        }
-        if(empty($_POST['content'])){
-            $errors[] = '內容須填寫';
-        }
-        if(!empty($published_at)){
-            //date_create_from_format()函數從指定的格式創建一個新的日期時間,若格式不正確會回傳false 
-           if(!date_create_from_format('Y-m-d H:i:s', $published_at)){
-                $errors[] = 'Invalid date and time';
-           }else{
-            //反之，若格式正確，則進一步檢查日期是否正確 date_get_last_errors()函數返回最後一次日期/時間解析的錯誤信息關聯陣列
-            $date_errors = date_get_last_errors();
-            if($date_errors['warning_count'] > 0){
-                $errors[] = 'Invalid date and time';
-            }
-           }
-        }
-
-        //若錯誤陣列為空 則執行
+        //驗證表單資料
+        $errors = ValidateArticle($title, $content, $published_at);
        
-        //建立與資料庫的連線
-        $conn = getDB();
+       
         //若錯誤陣列為空 則執行
         if(empty($errors)){
             //加入try-catch來捕捉錯誤 不直接進入500錯誤頁面
             try{
+                //建立與資料庫的連線
+                $conn = getDB();
+
                 //用佔位數來防止SQL注入
                 $sql = "INSERT INTO article(title, content, published_at)
                         VALUES(?, ?, ?)";
