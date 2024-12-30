@@ -1,17 +1,16 @@
 <?php
-require_once('includes/url.php');
+
 session_start();
 
-$_SESSION['is_logged_in'] = false;
+$_SESSION = [];
 
-require_once('includes/header.php');
-
-if (!empty($error)){
-    echo "<p>{$error}</p>";
+if (ini_get("session.use_cookies")){
+	$params = session_get_cookie_params();
+	setcookie(session_name(), '', time() - 442000, 
+		$params["path"], $param["doman"] , $param["secure"], $param["httponly"]);
+		
 }
-echo <<<_END
-    <h2>Logout</h2>
-    <p>您已登出</p>
-    _END;
+
+session_destroy();
+
 redirect("/PHP-beginger/index.php");
-require_once('includes/footer.php');

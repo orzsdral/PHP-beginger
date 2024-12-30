@@ -4,6 +4,8 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_POST['username'] === 'Anthony' && $_POST['password'] === 'LIN') {
+        //重新產生 session id 避免 session fixation
+        session_regenerate_id(true);
         $_SESSION['is_logged_in'] = true;
         
         redirect("/PHP-beginger/index.php");
