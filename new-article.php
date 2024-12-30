@@ -1,47 +1,80 @@
 <?php
     //引入db.php
     require_once('includes/db.php');
+    $errors = [];
+    //初始化變數
+    $title = '';//標題
+    $content = '';//內容
+    $published_at = '';//日期
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
+           
+        //取得表單資料
+        $title = htmlspecialchars($_POST['title']);
+        $content = htmlspecialchars($_POST['content']);
+        $published_at = htmlspecialchars($_POST['published_at']);
+        
+        //增檢查是否有空值
+        if(empty($_POST['title'])){
+            $errors[] = '標題須填寫';
+        }
+        if(empty($_POST['content'])){
+            $errors[] = '內容須填寫';
+        }
+        if(!empty($published_at)){
+            //date_create_from_format()函數從指定的格式創建一個新的日期時間,若格式不正確會回傳false 
+           if(!date_create_from_format('Y-m-d H:i:s', $published_at)){
+                $errors[] = 'Invalid date and time';
+           }else{
+            //反之，若格式正確，則進一步檢查日期是否正確 date_get_last_errors()函數返回最後一次日期/時間解析的錯誤信息關聯陣列
+            $date_errors = date_get_last_errors();
+            if($date_errors['warning_count'] > 0){
+                $errors[] = 'Invalid date and time';
+            }
+           }
+        }
+
+        //若錯誤陣列為空 則執行
+       
         //建立與資料庫的連線
         $conn = getDB();
-        
-        //取得表單資料
-        $title = $_POST['title'];
-        $content = $_POST['content'];
-        $published_at = $_POST['published_at'];
+        //若錯誤陣列為空 則執行
+        if(empty($errors)){
+            //加入try-catch來捕捉錯誤 不直接進入500錯誤頁面
+            try{
+                //用佔位數來防止SQL注入
+                $sql = "INSERT INTO article(title, content, published_at)
+                        VALUES(?, ?, ?)";
+                //$results = mysqli_query($conn, $sql);
+                //mysqli_prepare()函數準備要執行的SQL語句
+                $stmt = mysqli_prepare($conn, $sql);
+                if($stmt === false){
+                    echo mysqli_error($conn);
+                    exit;
+                }else{
+                    //mysqli_stmt_bind_param()函數將變量綁定到準備好的語句中
+                    // s 代表 string i 代表 integer d 代表 double b 代表 blob
+                    mysqli_stmt_bind_param($stmt, "sss", $title, $content, $published_at);
+                    //mysqli_stmt_execute()函數執行準備好的語句
+                    if(!mysqli_stmt_execute($stmt)){
+                        echo mysqli_stmt_error($stmt);
+                        exit; 
+                    }
 
+                //mysqli_insert_id()函數返回上一個查詢中自動生成的ID
+                $id = mysqli_insert_id($conn);
 
-        //加入try-catch來捕捉錯誤 不直接進入500錯誤頁面
-        try{
-            //用佔位數來防止SQL注入
-            $sql = "INSERT INTO article(title, content, published_at)
-                    VALUES(?, ?, ?)";
-            //$results = mysqli_query($conn, $sql);
-            //mysqli_prepare()函數準備要執行的SQL語句
-            $stmt = mysqli_prepare($conn, $sql);
-            if($stmt === false){
-                echo mysqli_error($conn);
+                //檢查伺服器是否使用http或https協議標準方式
+                $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https' : 'http';
+                //header()函數用於向瀏覽器發送特定的HTTP標頭
+                header("Location: $protocol://". $_SERVER['HTTP_HOST'] . "/PHP-beginger/article.php?id=$id");
                 exit;
-            }else{
-                //mysqli_stmt_bind_param()函數將變量綁定到準備好的語句中
-                // s 代表 string i 代表 integer d 代表 double b 代表 blob
-                mysqli_stmt_bind_param($stmt, "sss", $title, $content, $published_at);
-                //mysqli_stmt_execute()函數執行準備好的語句
-                if(!mysqli_stmt_execute($stmt)){
-                    echo mysqli_stmt_error($stmt);
-                    exit; 
                 }
-
-            //mysqli_insert_id()函數返回上一個查詢中自動生成的ID
-            $id = mysqli_insert_id($conn);
-            //判斷是否有插入成功 
-            echo "Inserted article with id: $id";
             }
-        }
-        catch(Exception $e){
-            echo "<script>alert('新增失敗,請重新輸入');</script>";
-            //無須另外設定也會轉回new-article.php
-            //header('Location: new-article.php');
+            catch(Exception $e){
+                echo "<script>alert('新增失敗,請重新輸入');</script>";
+                //無須另外設定也會轉回new-article.php
+                //header('Location: new-article.php');
+            }
         }
       
         
@@ -50,7 +83,6 @@
 ?>
 <?php require_once('includes/header.php'); ?>
 
-<center>
     <h2>New article</h2>    
 
     <form method="post">
@@ -66,7 +98,8 @@
         <!-- 因要練習邏輯需要 先移除前端required來增強後端卡控 -->
         標題:
         <label for="title">
-            <input type="text" name="title" id="title" placeholder="Article title" required>
+            <!-- 設定Value為$title來保留直 -->
+            <input type="text" name="title" id="title" placeholder="Article title" value="<?= $title?>">
         </label>
     </div>
     <br>
@@ -81,7 +114,9 @@
     <div>
         日期:
         <label for="published_at">
-            <input type="datetime" name="published_at" id="published_at" required>
+            <!-- 因要練習邏輯需要 先移除前端required來增強後端卡控 -->
+             <!-- 設定$published_at保留直 -->
+            <input type="datetime" name="published_at" id="published_at" value="<?= $published_at?>">
         </label>
     </div>
     <br>
@@ -91,6 +126,5 @@
     </div>
 
     </form>
-</center>
 
 <?php require_once('includes/footer.php'); ?>
