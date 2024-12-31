@@ -1,10 +1,9 @@
 <?php
 require "Item.php";
 
+//傳遞參數給件構函數
+$my_item = new Item('same', 'the moudle!!');
 
-$my_item = new Item();
+var_dump($my_item->descript);
 
-$my_item->sayHello();
-
-$my_item->name = 'Jame';
-echo ', '. $my_item->getName();
+var_dump($my_item->name);//設成private 會無法在這值接使用，只能在物件內使用
