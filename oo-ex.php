@@ -1,10 +1,16 @@
 <?php
 require "Item.php";
+require "book.php";
 
-define("MAX",24);
-$my_item = new Item('jame', 'the best player');
+$my_item = new Item();
 
+$my_item->name="TV";
 
-Item::MAX_LENGTH;
+echo $my_item->getListingDescription();
 
-echo Item::MAX_LENGTH;
+$book = new book();
+
+$book->price = 12.99;
+$book->name = 'anthony';
+
+echo $book->getListingDescription();
