@@ -14,6 +14,15 @@ class DB{
     
         $dsn = 'mysql:host=' . $db_host . ';dbname=' . $db_name . ';charset=utf8';
         
-        return new PDO($dsn, $db_user, $db_password);
+
+        try{
+            $db = new PDO($dsn, $db_user, $db_password); 
+            $db ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  //通過這設置可在處理資料庫錯誤時拋出異常
+
+            return $db;
+        } catch (PDOException $e){
+            echo $e->getMessage();
+            exit;
+        }
     }
 }

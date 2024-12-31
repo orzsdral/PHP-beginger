@@ -18,12 +18,7 @@ session_start();
             FROM article';
 
     $results = $conn->query($sql);
-    //判斷$result===false,代表SQL語法有誤
-    if($results === false){
-        //顯示錯誤訊息
-        $conn->errorInfo();
-        exit;
-    }
+ //移除判斷錯誤，改用PDO內建可拋出異常在物件內
     $articles = $results->fetchALL(PDO::FETCH_ASSOC);
 ?>
 <?php require_once('includes/header.php'); ?>
