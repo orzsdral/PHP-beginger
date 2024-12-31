@@ -1,24 +1,21 @@
 <?php
+//getter / setter
 class Item{
     
     private $name;
-    public $descript = 'the old post';
+    private $descript ;
 
-
-    //建構函數--每次使用此物件會自動執行它，通常被用來做初始化動作
-    function __construct($name, $descript){
+    public function getName(){
+        return $this->name;
+    }
+    public function setName($name){
         $this->name = $name;
+    }
+
+    public function getDescript(){
+        return $this->descript;
+    }
+    public function setDescript($descript){
         $this->descript = $descript;
-
-
-    }
-    ///它通常會放置在此 所有方法前
-
-    function sayHello(){
-        echo 'Hello';
-    }
-
-    function getName(){
-        return $this->name;   //特殊變量this,表示當前對象(實例)
     }
 }

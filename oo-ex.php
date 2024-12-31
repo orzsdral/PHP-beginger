@@ -1,9 +1,12 @@
 <?php
 require "Item.php";
 
-//傳遞參數給件構函數
-$my_item = new Item('same', 'the moudle!!');
 
-var_dump($my_item->descript);
+$my_item = new Item();
 
-var_dump($my_item->name);//設成private 會無法在這值接使用，只能在物件內使用
+
+$my_item->setName('ADD');
+$my_item->setdescript('this is function for add');
+
+echo "function_Name:". $my_item->getName() . "<br>"; 
+echo "The descript:" . $my_item->getDescript();
