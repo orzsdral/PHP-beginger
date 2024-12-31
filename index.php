@@ -1,9 +1,4 @@
 <?php
-// 啟用所有錯誤報告
-error_reporting(E_ALL);
-
-// 顯示錯誤在輸出上
-ini_set('display_errors', '1');
 require_once("classes/DB.php");
 require_once('includes/auth.php');
 

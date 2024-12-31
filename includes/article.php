@@ -11,20 +11,19 @@
 Function getArticle($conn, $id, $columns='*'){
     $sql ="SELECT $columns
          FROM article
-         WHERE id = ?";
+         WHERE id = :id";
 
-    $stmt = mysqli_prepare($conn, $sql);
-    if($stmt === false){
-        echo mysqli_error($conn);
-        exit;
-    } else{
-        mysqli_stmt_bind_param($stmt, 'i', $id);
+    $stmt = $conn->prepare($sql);
+    //去除錯誤判斷以在物件內部做了
 
-        if(mysqli_stmt_execute($stmt)){
-            $result = mysqli_stmt_get_result($stmt);
-            return mysqli_fetch_array($result, MYSQLI_ASSOC);
-        }
+    //PDO綁定參數方式
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+    //PDO執行語句方式
+    if($stmt->execute()){
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    
 
 }
 
