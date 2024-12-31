@@ -1,24 +1,30 @@
 <?php
+// 啟用所有錯誤報告
+error_reporting(E_ALL);
+
+// 顯示錯誤在輸出上
+ini_set('display_errors', '1');
+require_once("classes/DB.php");
 require_once('includes/auth.php');
 
 session_start();
-    //引入db.php
-    require_once('includes/db.php'); 
+   
     //建立與資料庫的連線
-    $conn = getDB();
+    $db = new DB(); //創建DB物件實例
+    $conn = $db->getConn();//使用物件方法
     
     //抓取資料庫的資料
     $sql = 'SELECT * 
             FROM article';
 
-    $results = mysqli_query($conn, $sql);
+    $results = $conn->query($sql);
     //判斷$result===false,代表SQL語法有誤
     if($results === false){
         //顯示錯誤訊息
-        echo mysqli_error($conn);
+        $conn->errorInfo();
         exit;
     }
-    $articles = mysqli_fetch_all($results, MYSQLI_ASSOC);
+    $articles = $results->fetchALL(PDO::FETCH_ASSOC);
 ?>
 <?php require_once('includes/header.php'); ?>
 <!-- //判斷是否登入 -->

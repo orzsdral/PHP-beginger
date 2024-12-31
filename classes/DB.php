@@ -12,7 +12,7 @@ class DB{
         $db_password = 'LIN';
         $db_name = 'cms';
     
-        $dsn = 'msyql:host=' . $db_host . ';dbname=' . $db_name . ';charset=utf8';
+        $dsn = 'mysql:host=' . $db_host . ';dbname=' . $db_name . ';charset=utf8';
         
         return new PDO($dsn, $db_user, $db_password);
     }
