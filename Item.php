@@ -1,6 +1,7 @@
 <?php
 //getter / setter
 class Item{
+  CONST MAX_LENGTH = 20;//定義類別常數方式
     
   public $name;
   public $descript = 'This is the default';
