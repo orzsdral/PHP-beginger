@@ -10,7 +10,7 @@ echo $my_item->getListingDescription();
 
 $book = new book();
 
-$book->price = 12.99;
-$book->name = 'anthony';
+$book->author= 'anthony';
+
 
 echo $book->getListingDescription();
