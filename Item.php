@@ -2,20 +2,26 @@
 //getter / setter
 class Item{
     
-    private $name;
-    private $descript ;
+  public $name;
+  public $descript = 'This is the default';
+   
+  public static $count = 0;  //static 在最前面或後面沒差 
 
-    public function getName(){
-        return $this->name;
-    }
-    public function setName($name){
+  public function __construct($name, $descript){
         $this->name = $name;
+        $this->descript = $descript;
+        self::$count++;
+  }
+
+    function sayHello(){
+    echo 'Hello';
     }
 
-    public function getDescript(){
-        return $this->descript;
+    function getName(){
+        return $this->name;   //特殊變量this,表示當前對象(實例)
     }
-    public function setDescript($descript){
-        $this->descript = $descript;
+
+    public static function showCount(){
+        echo static::$count;
     }
 }
