@@ -4,13 +4,9 @@ require "book.php";
 
 $my_item = new Item();
 
-$my_item->name="TV";
-
-echo $my_item->getListingDescription();
+//echo $my_item->code;
 
 $book = new book();
 
-$book->author= 'anthony';
 
-
-echo $book->getListingDescription();
+echo $book->getcode();
