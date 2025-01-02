@@ -167,4 +167,34 @@ class Article{
     }
 
 
+    /** 
+     * 新增文章 --使用現在屬性值
+     * 
+     * @param object $conn 連接資料庫
+     * 
+     * @return boolean 是否成功更新
+     */
+
+     public function createArticle($conn){
+        //在更新時直接做驗證，所以此驗證函數設定成protected
+        if ($this->Validate()){
+            $sql = "INSERT INTO article (title, content, published_at)
+                    VALUES (:title, :content, :published_at)";
+
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
+            $stmt->bindValue(':content', $this->content, PDO::PARAM_STR);
+            ($this->published_at == '')?($stmt->bindValue(':published_at', null, PDO::PARAM_NULL)) : ($stmt->bindValue(':published_at', $this->published_at, PDO::PARAM_STR));
+
+            if ($stmt->execute()){
+                $this->id = $conn->lastInsertId();
+                return true;
+            } 
+        } else {
+            return false;
+        }
+    }
+
+
 }
