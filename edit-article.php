@@ -1,13 +1,7 @@
 <?php
-// 啟用所有錯誤報告
-error_reporting(E_ALL);
-
-// 顯示錯誤在輸出上
-ini_set('display_errors', '1');
 //引入db.php/article.php*url.php   
 require_once('classes/DB.php');
 require_once('classes/Article.php');
-require_once('includes/article.php');
    require_once('includes/url.php');
 
     //建立與資料庫的連線//改用類別方式連線
@@ -38,17 +32,10 @@ require_once('includes/article.php');
         $article->content = $_POST['content'];
         $article->published_at = $_POST['published_at'];
         
-        //驗證表單資料
-        $errors = ValidateArticle($article->title, $article->content, $article->published_at);
-       
-       
-        //若錯誤陣列為空 則執行
-        if(empty($errors)){
-           
+        //驗證改由物件內部處理
                 
-                if($article->updateArticle($conn)){
-                    redirect("/PHP-beginger/article.php?id={$article->id}");
-                }
+        if($article->updateArticle($conn)){
+            redirect("/PHP-beginger/article.php?id={$article->id}");
         }
     }
 

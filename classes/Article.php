@@ -26,6 +26,11 @@ class Article{
      */
 	public $published_at;
 
+    /** 
+     * 錯誤訊息
+     * @var array
+    */
+    public $errors = [];
 
 
     /** 
@@ -88,20 +93,59 @@ class Article{
      */
 
     public function updateArticle($conn){
-        $sql = "UPDATE article
-                SET title = :title,
-                    content = :content,
-                    published_at = :published_at
-                WHERE id = :id";
+        //在更新時直接做驗證，所以此驗證函數設定成protected
+        if ($this->Validate()){
+            $sql = "UPDATE article
+                    SET title = :title,
+                        content = :content,
+                        published_at = :published_at
+                    WHERE id = :id";
 
-        $stmt = $conn->prepare($sql);
+            $stmt = $conn->prepare($sql);
 
-        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
-        $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
-        $stmt->bindValue(':content', $this->content, PDO::PARAM_STR);
-        ($this->published_at == '')?($stmt->bindValue(':published_at', null, PDO::PARAM_NULL)) : ($stmt->bindValue(':published_at', $this->published_at, PDO::PARAM_STR));
+            $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+            $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
+            $stmt->bindValue(':content', $this->content, PDO::PARAM_STR);
+            ($this->published_at == '')?($stmt->bindValue(':published_at', null, PDO::PARAM_NULL)) : ($stmt->bindValue(':published_at', $this->published_at, PDO::PARAM_STR));
 
-        return $stmt->execute();
+            return $stmt->execute();
+        } else {
+            return false;
+        }
     }
+
+/**
+ * 驗證文章內容 --放置任何錯誤訊息在一個$errors屬性中
+
+ * 
+ * @return array 布林 如果是True 表示沒有錯誤,否則有錯誤
+ */
+
+protected function Validate(){
+    
+   
+    
+    //增檢查是否有空值
+    if(empty($this->title)){
+        $this->errors[] = '標題須填寫';
+    }
+    if(empty($this->content)){
+        $this->errors[] = '內容須填寫';
+    }
+    if(!empty($this->published_at)){
+        //date_create_from_format()函數從指定的格式創建一個新的日期時間,若格式不正確會回傳false 
+       if(!date_create_from_format('Y-m-d H:i:s', $this->published_at)){
+            $this->errors[] = 'Invalid date and time';
+       }else{
+        //反之，若格式正確，則進一步檢查日期是否正確 date_get_last_errors()函數返回最後一次日期/時間解析的錯誤信息關聯陣列
+        $date_errors = date_get_last_errors();
+        if($date_errors['warning_count'] > 0){
+            $this->errors[] = 'Invalid date and time';
+        }
+       }
+    }
+    return empty($this->errors);
+}
+
 
 }
