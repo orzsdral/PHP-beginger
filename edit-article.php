@@ -1,25 +1,28 @@
 <?php
-//引入db.php/article.php*url.php    
-   require_once('includes/db.php');
-   require_once('includes/article.php');
+// 啟用所有錯誤報告
+error_reporting(E_ALL);
+
+// 顯示錯誤在輸出上
+ini_set('display_errors', '1');
+//引入db.php/article.php*url.php   
+require_once('classes/DB.php');
+require_once('classes/Article.php');
+require_once('includes/article.php');
    require_once('includes/url.php');
 
-    //建立與資料庫的連線
-    $conn = getDB();
+    //建立與資料庫的連線//改用類別方式連線
+    $db =new DB();
+    $conn = $db->getConn();
 
     //有改用準備語句，所以可去除is_numeric()判斷
     if(isset($_GET['id'])){
         //取得文章
-        $articles = getArticle($conn, $_GET['id']);
+        $article = Article::getByID($conn, $_GET['id']);
 
-        if ($articles === null){
+        if (!$article){
           die("文章未發現");
         }
-        //取得文章資訊
-        $id = $articles['id'];
-        $title = $articles['title'];
-        $content = $articles['content'];
-        $published_at = $articles['published_at'];
+ 
       
     }else{
         //若沒有id值或id值不是數字則顯示null
@@ -31,32 +34,21 @@
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
            
         //取得表單資料
-        $title = htmlspecialchars($_POST['title']);
-        $content = htmlspecialchars($_POST['content']);
-        $published_at = htmlspecialchars($_POST['published_at']);
+        $article->title = $_POST['title'];
+        $article->content = $_POST['content'];
+        $article->published_at = $_POST['published_at'];
         
         //驗證表單資料
-        $errors = ValidateArticle($title, $content, $published_at);
+        $errors = ValidateArticle($article->title, $article->content, $article->published_at);
        
        
         //若錯誤陣列為空 則執行
         if(empty($errors)){
-            //更新文章
-            $sql = "UPDATE article
-                    SET title = ?, content = ?, published_at = ?
-                    WHERE id = ?";
-
-            $stmt = mysqli_prepare($conn, $sql);
-            if($stmt === false){
-                echo mysqli_error($conn);
-                exit;
-            }else{
-                mysqli_stmt_bind_param($stmt, "sssi", $title, $content, $published_at, $id);
+           
                 
-                if(mysqli_stmt_execute($stmt)){
-                    redirect("/PHP-beginger/article.php?id=$id");
+                if($article->updateArticle($conn)){
+                    redirect("/PHP-beginger/article.php?id={$article->id}");
                 }
-            }
         }
     }
 
