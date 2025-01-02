@@ -1,10 +1,21 @@
 <?php
+// 啟用所有錯誤報告
+error_reporting(E_ALL);
+
+// 顯示錯誤在輸出上
+ini_set('display_errors', '1');
 require_once('includes/url.php');
 require_once('classes/User.php');
+require_once('classes/DB.php');
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (User::authenticate($_POST['username'], $_POST['password'])) {
+    //建立資料庫連線
+    $db = new DB();
+    $conn = $db->getConn();
+    
+    //改用物件方式驗證使用者
+    if (User::authenticate($conn, $_POST['username'], $_POST['password'])) {
         //重新產生 session id 避免 session fixation
         session_regenerate_id(true);
         $_SESSION['is_logged_in'] = true;
