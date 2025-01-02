@@ -1,5 +1,5 @@
 <?php
-require_once('includes/url.php');
+require_once('classes/Url.php');
 session_start();
 
 $_SESSION = [];
@@ -13,4 +13,4 @@ if (ini_get("session.use_cookies")){
 
 session_destroy();
 
-redirect("/PHP-beginger/index.php");
+Url::redirect("/PHP-beginger/index.php");

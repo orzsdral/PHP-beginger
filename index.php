@@ -1,7 +1,8 @@
 <?php
 require_once("classes/DB.php");
 require_once("classes/Article.php");
-require_once('includes/auth.php');
+require_once('classes/Auth.php');
+// require_once('includes/auth.php');
 
 session_start();
    
@@ -19,7 +20,7 @@ session_start();
 ?>
 <?php require_once('includes/header.php'); ?>
 <!-- //判斷是否登入 -->
-<?php if (isLoggedIn()): ?>
+<?php if (Auth::isLoggedIn()): ?>
     <p>你已登入，要<a href="logout.php">登出</a>嗎?</p>
 <!-- //登入才能看到移動來判斷裡面 -->
     <a href="new-article.php">新增文章</a>

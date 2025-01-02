@@ -1,10 +1,6 @@
 <?php
-// 啟用所有錯誤報告
-error_reporting(E_ALL);
-
-// 顯示錯誤在輸出上
 ini_set('display_errors', '1');
-require_once('includes/url.php');
+require_once('classes/Url.php');
 require_once('classes/User.php');
 require_once('classes/DB.php');
 session_start();
@@ -20,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_regenerate_id(true);
         $_SESSION['is_logged_in'] = true;
         
-        redirect("/PHP-beginger/index.php");
+        Url::redirect("/PHP-beginger/index.php");
         exit;
     } else {
         $error = '帳號或密碼錯誤';

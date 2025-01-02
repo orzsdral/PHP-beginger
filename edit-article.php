@@ -2,7 +2,7 @@
 //引入db.php/article.php*url.php   
 require_once('classes/DB.php');
 require_once('classes/Article.php');
-   require_once('includes/url.php');
+require_once('classes/Url.php');
 
     //建立與資料庫的連線//改用類別方式連線
     $db = new DB();
@@ -33,7 +33,7 @@ require_once('classes/Article.php');
         //驗證改由物件內部處理
                 
         if($article->updateArticle($conn)){
-            redirect("/PHP-beginger/article.php?id={$article->id}");
+            Url::redirect("/PHP-beginger/article.php?id={$article->id}");
         }
     }
 
