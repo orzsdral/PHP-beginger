@@ -1,9 +1,10 @@
 <?php
 require_once('includes/url.php');
+require_once('classes/User.php');
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_POST['username'] === 'Anthony' && $_POST['password'] === 'LIN') {
+    if (User::authenticate($_POST['username'], $_POST['password'])) {
         //重新產生 session id 避免 session fixation
         session_regenerate_id(true);
         $_SESSION['is_logged_in'] = true;
