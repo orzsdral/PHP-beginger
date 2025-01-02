@@ -5,7 +5,7 @@ require_once('classes/Article.php');
    require_once('includes/url.php');
 
     //建立與資料庫的連線//改用類別方式連線
-    $db =new DB();
+    $db = new DB();
     $conn = $db->getConn();
 
     //有改用準備語句，所以可去除is_numeric()判斷
@@ -19,8 +19,6 @@ require_once('classes/Article.php');
  
       
     }else{
-        //若沒有id值或id值不是數字則顯示null
-        //$articles = null;
         die("id 不存在, 文章未發現");
     }
 

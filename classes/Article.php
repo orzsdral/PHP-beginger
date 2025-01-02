@@ -121,31 +121,50 @@ class Article{
  * @return array 布林 如果是True 表示沒有錯誤,否則有錯誤
  */
 
-protected function Validate(){
+    protected function Validate(){
+        
     
-   
-    
-    //增檢查是否有空值
-    if(empty($this->title)){
-        $this->errors[] = '標題須填寫';
-    }
-    if(empty($this->content)){
-        $this->errors[] = '內容須填寫';
-    }
-    if(!empty($this->published_at)){
-        //date_create_from_format()函數從指定的格式創建一個新的日期時間,若格式不正確會回傳false 
-       if(!date_create_from_format('Y-m-d H:i:s', $this->published_at)){
-            $this->errors[] = 'Invalid date and time';
-       }else{
-        //反之，若格式正確，則進一步檢查日期是否正確 date_get_last_errors()函數返回最後一次日期/時間解析的錯誤信息關聯陣列
-        $date_errors = date_get_last_errors();
-        if($date_errors['warning_count'] > 0){
-            $this->errors[] = 'Invalid date and time';
+        
+        //增檢查是否有空值
+        if(empty($this->title)){
+            $this->errors[] = '標題須填寫';
         }
-       }
+        if(empty($this->content)){
+            $this->errors[] = '內容須填寫';
+        }
+        if(!empty($this->published_at)){
+            //date_create_from_format()函數從指定的格式創建一個新的日期時間,若格式不正確會回傳false 
+        if(!date_create_from_format('Y-m-d H:i:s', $this->published_at)){
+                $this->errors[] = 'Invalid date and time';
+        }else{
+            //反之，若格式正確，則進一步檢查日期是否正確 date_get_last_errors()函數返回最後一次日期/時間解析的錯誤信息關聯陣列
+            $date_errors = date_get_last_errors();
+            if($date_errors['warning_count'] > 0){
+                $this->errors[] = 'Invalid date and time';
+            }
+        }
+        }
+        return empty($this->errors);
     }
-    return empty($this->errors);
-}
+
+    /**
+     * 刪除文章
+     * 
+     * @param object $conn 連接資料庫
+     * 
+     * @return boolean 是否成功刪除
+     */
+
+    public function deleteArticle($conn){
+        $sql = "DELETE FROM article
+                WHERE id = :id";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
 
 
 }
