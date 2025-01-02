@@ -1,5 +1,6 @@
 <?php
 require_once("classes/DB.php");
+require_once("classes/Article.php");
 require_once('includes/auth.php');
 
 session_start();
@@ -8,13 +9,13 @@ session_start();
     $db = new DB(); //創建DB物件實例
     $conn = $db->getConn();//使用物件方法
     
-    //抓取資料庫的資料
-    $sql = 'SELECT * 
-            FROM article';
+    //改從類別內抓取文章
+    // $sql = 'SELECT * 
+    //         FROM article';
 
-    $results = $conn->query($sql);
- //移除判斷錯誤，改用PDO內建可拋出異常在物件內
-    $articles = $results->fetchALL(PDO::FETCH_ASSOC);
+    // $results = $conn->query($sql);
+    // $articles = $results->fetchALL(PDO::FETCH_ASSOC);
+    $articles = Article::getAll($conn);
 ?>
 <?php require_once('includes/header.php'); ?>
 <!-- //判斷是否登入 -->
