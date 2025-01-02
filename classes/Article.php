@@ -5,6 +5,29 @@
  * 
  */
 class Article{
+    /**
+     * 唯一的辨識
+     * @var integer
+     */
+    public $id;
+    /**
+     * 文章標題
+     * @var string
+     */
+	public $title;
+    /** 
+     * 文章內容
+     * @var string
+     */
+	public $content;
+    /**
+     * 文章發布時間
+     * @var string
+     */
+	public $published_at;
+
+
+
     /** 
      * 藉由ID得到文章
      * 
@@ -32,7 +55,7 @@ class Article{
  * @param integer $id 文章 ID
  * @param string $columns 要選取的欄位,預設為所有欄位
  * 
- * @return assoc_array The article record with that ID,or null if not found
+ * @return mixed 一個類別物件 或 null 如果沒有找到
  */
     public static function getByID($conn, $id, $columns='*'){
         $sql ="SELECT $columns
@@ -45,9 +68,14 @@ class Article{
         //PDO綁定參數方式
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 
+        //改成設定為對象回傳,傳遞欲返回的類別名稱
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Article');
+
         //PDO執行語句方式
         if($stmt->execute()){
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            //return $stmt->fetch(PDO::FETCH_ASSOC);
+            //改成為回傳物件
+            return $stmt->fetch();
         }
     }
 

@@ -29,12 +29,12 @@
         <!-- 加入判斷如果數組是空的不能顯示///因改使用mysqli_fetch_assoc()若回傳無值會顯null因此更換判斷條件 -->
         <?php if($articles): ?>
                 <article>
-                    <h2><?= htmlspecialchars($articles['title']) ?></h2>
-                    <p><?= htmlspecialchars($articles['content']) ?></p>
+                    <h2><?= htmlspecialchars($articles->title) ?></h2>
+                    <p><?= htmlspecialchars($articles->content) ?></p>
                 </article>
 
-                <a href="edit-article.php?id=<?= $articles['id'];?>">編輯文章</a>
-                <a href="delete-article.php?id=<?= $articles['id'];?>">刪除文章</a>
+                <a href="edit-article.php?id=<?= $articles->id;?>">編輯文章</a>
+                <a href="delete-article.php?id=<?= $articles->id;?>">刪除文章</a>
         <?php else: ?>
                 No articles found.
         <?php endif; ?>
