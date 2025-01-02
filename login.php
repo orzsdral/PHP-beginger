@@ -1,14 +1,10 @@
 <?php
-ini_set('display_errors', '1');
-require_once('classes/Url.php');
-require_once('classes/User.php');
-require_once('classes/DB.php');
-session_start();
+//改成自動加載
+require_once("includes/init.php");
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //建立資料庫連線
-    $db = new DB();
-    $conn = $db->getConn();
+    $conn = require_once('includes/db.php');
     
     //改用物件方式驗證使用者
     if (User::authenticate($conn, $_POST['username'], $_POST['password'])) {

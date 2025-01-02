@@ -1,6 +1,7 @@
 <?php
-require_once('classes/Url.php');
-session_start();
+//改成自動加載
+require_once("includes/init.php");
+//session_start();
 
 $_SESSION = [];
 

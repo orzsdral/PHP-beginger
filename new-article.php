@@ -1,12 +1,9 @@
 <?php
-    //引入db.php/article.php/url.php/auth.php
-require_once('classes/DB.php');
-require_once('classes/Article.php');
-require_once('classes/Auth.php');
-require_once('classes/Url.php');
+//改成自動加載
+require_once("includes/init.php");
 
   
-session_start();
+//session_start();
 //檢查是否登入
 if(!Auth::isLoggedIn()){
     die('請先登入');
@@ -15,8 +12,7 @@ if(!Auth::isLoggedIn()){
     $article = new Article();
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
            
-        $db = new DB();
-        $conn = $db->getConn();
+        $conn = require_once('includes/db.php');
 
         //取得表單資料
         $article->title = $_POST['title'];

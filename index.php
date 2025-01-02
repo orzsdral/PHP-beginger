@@ -1,21 +1,9 @@
 <?php
-require_once("classes/DB.php");
-require_once("classes/Article.php");
-require_once('classes/Auth.php');
-// require_once('includes/auth.php');
-
-session_start();
+//改成自動加載
+require_once("includes/init.php");
    
-    //建立與資料庫的連線
-    $db = new DB(); //創建DB物件實例
-    $conn = $db->getConn();//使用物件方法
-    
-    //改從類別內抓取文章
-    // $sql = 'SELECT * 
-    //         FROM article';
-
-    // $results = $conn->query($sql);
-    // $articles = $results->fetchALL(PDO::FETCH_ASSOC);
+   $conn = require_once('includes/db.php');
+    //取得所有文章
     $articles = Article::getAll($conn);
 ?>
 <?php require_once('includes/header.php'); ?>
