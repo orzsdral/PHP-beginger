@@ -5,9 +5,11 @@ require_once("includes/init.php");
   
 //session_start();
 //檢查是否登入
-if(!Auth::isLoggedIn()){
-    die('請先登入');
-}
+// if(!Auth::isLoggedIn()){
+//     die('請先登入');
+// }
+Auth::requireLogin();
+
 
     $article = new Article();
     if($_SERVER['REQUEST_METHOD'] === 'POST'){

@@ -8,9 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     //改用物件方式驗證使用者
     if (User::authenticate($conn, $_POST['username'], $_POST['password'])) {
-        //重新產生 session id 避免 session fixation
-        session_regenerate_id(true);
-        $_SESSION['is_logged_in'] = true;
+       
+        Auth::login();
         
         Url::redirect("/PHP-beginger/index.php");
         exit;
