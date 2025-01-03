@@ -4,6 +4,8 @@ require_once("includes/init.php");
 
     $conn = require_once('includes/db.php');
 
+    Auth::requireLogin();
+
     //有改用準備語句，所以可去除is_numeric()判斷
     if(isset($_GET['id'])){
         //取得文章
