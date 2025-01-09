@@ -8,7 +8,7 @@
  *
  */   
 spl_autoload_register(function($class){
-    require_once("classes/{$class}.php");
+    require_once(dirname(__DIR__) . "/classes/{$class}.php");
 });
 
 session_start();

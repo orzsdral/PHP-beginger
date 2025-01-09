@@ -26,10 +26,9 @@ require_once("includes/init.php");
                     <h2><?= htmlspecialchars($articles->title) ?></h2>
                     <p><?= htmlspecialchars($articles->content) ?></p>
                 </article>
-                <?php if(Auth::isLoggedIn()): ?>
                 <a href="edit-article.php?id=<?= $articles->id;?>">編輯文章</a>
                 <a href="delete-article.php?id=<?= $articles->id;?>">刪除文章</a>
-                <?php endif; ?>
+               
         <?php else: ?>
                 No articles found.
         <?php endif; ?>
