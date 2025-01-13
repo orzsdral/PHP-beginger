@@ -11,4 +11,17 @@
         <h1>My Blog</h1>
     </header>
  
+    <nav>
+        <ul>
+            <li><a href="/PHP-beginger/">首頁</a></li>
+            <?php if (Auth::isLoggedIn()) :?>
+                <li><a href="/PHP-beginger/admin/">管理者介面</a></li>
+                <li><a href="/PHP-beginger/logout.php">登出</a></li>
+            <?php else:?>
+                <li><a href="/PHP-beginger/login.php">登入</a></li>
+            <?php endif;?>
+        </ul>
+
+    </nav>
+
     <main>
