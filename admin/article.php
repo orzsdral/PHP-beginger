@@ -1,8 +1,9 @@
 <?php
 //改成自動加載
-require_once("includes/init.php");
+require_once("../includes/init.php");
    
-    $conn = require_once('includes/db.php');
+Auth::requireLogin();
+    $conn = require_once('../includes/db.php');
 
     //有改用準備語句，所以可去除is_numeric()判斷
     if(isset($_GET['id'])){
@@ -15,7 +16,7 @@ require_once("includes/init.php");
         $articles = null;
     }
 ?>
-<?php require_once('includes/header.php'); ?>
+<?php require_once('../includes/header.php'); ?>
 
 
     <main>
@@ -26,10 +27,11 @@ require_once("includes/init.php");
                     <h2><?= htmlspecialchars($articles->title) ?></h2>
                     <p><?= htmlspecialchars($articles->content) ?></p>
                 </article>
-      
+                <a href="edit-article.php?id=<?= $articles->id;?>">編輯文章</a>
+                <a href="delete-article.php?id=<?= $articles->id;?>">刪除文章</a>
                
         <?php else: ?>
                 No articles found.
         <?php endif; ?>
 
-<?php require_once('includes/footer.php'); ?>
+<?php require_once('../includes/footer.php'); ?>
