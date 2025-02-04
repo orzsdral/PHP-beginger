@@ -35,7 +35,7 @@ Auth::requireLogin();
 
 require_once('../includes/header.php');
     echo "<h2>編輯文章</h2>";
-require_once('../includes/form.php');
+require_once('includes/form.php');
 require_once('../includes/footer.php');
 
 ?>

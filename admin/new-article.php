@@ -1,6 +1,6 @@
 <?php
 //改成自動加載
-require_once("includes/init.php");
+require_once("../includes/init.php");
 
   
 //session_start();
@@ -14,7 +14,7 @@ Auth::requireLogin();
     $article = new Article();
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
            
-        $conn = require_once('includes/db.php');
+        $conn = require_once('../includes/db.php');
 
         //取得表單資料
         $article->title = $_POST['title'];
@@ -24,7 +24,7 @@ Auth::requireLogin();
         //驗證改由物件內部處理
                 
         if($article->createArticle($conn)){
-            Url::redirect("/PHP-beginger/article.php?id={$article->id}");
+            Url::redirect("/PHP-beginger/admin/article.php?id={$article->id}");
         }
        
        
@@ -33,10 +33,10 @@ Auth::requireLogin();
         
     }
 
-require_once('includes/header.php');
+require_once('../includes/header.php');
 
    echo "<h2>新增文章</h2>";    
 
 require_once('includes/form.php');    
 
-require_once('includes/footer.php'); ?>
+require_once('../includes/footer.php'); ?>
