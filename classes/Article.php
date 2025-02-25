@@ -52,6 +52,36 @@ class Article{
         return $results->fetchAll(PDO::FETCH_ASSOC);
     }  
 
+    /** 
+     * 取得分頁的文章數
+     * 
+     * @param object $conn 連接資料庫
+     * @param integer $limet 紀錄筆數
+     * @param integer $offset 略過幾筆
+     *
+     * @return array 回傳幾筆文章聯想陣列範圍
+     */
+
+    public static function getPage($conn, $limet, $offset){
+        $sql = "SELECT * 
+                FROM article
+                ORDER BY published_at
+                LIMIT :limet
+                OFFSET :offset";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':limet', $limet, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchALL(PDO::FETCH_ASSOC);
+    }
+
+
+
+
+
 
 /**
  * 藉由ID得到文章

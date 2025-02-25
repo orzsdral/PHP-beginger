@@ -3,8 +3,11 @@
 require_once("includes/init.php");
    
    $conn = require_once('includes/db.php');
-    //取得所有文章
-    $articles = Article::getAll($conn);
+    
+     //取得所有文章
+     $articles = Article::getPage($conn, 4, 0);
+  
+   
 ?>
 <?php require_once('includes/header.php'); ?>
 
