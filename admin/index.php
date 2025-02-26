@@ -5,8 +5,12 @@ require_once("../includes/init.php");
 Auth::requireLogin();
 
    $conn = require_once('../includes/db.php');
-    //取得所有文章
-    $articles = Article::getAll($conn);
+
+
+   $paginator = new Paginator($_GET['page'] ?? 1, 6, Article::getTotal($conn));
+
+   //取得所有文章
+   $articles = Article::getPage($conn, $paginator->limit,  $paginator->offset);
 ?>
 <?php require_once('../includes/header.php'); ?>
        
@@ -33,6 +37,8 @@ Auth::requireLogin();
                     <?php endforeach; ?>
                 </tbody>
             </table>
+
+<?php require_once('../includes/pagination.php'); ?>
         <?php endif; ?>
 
 <?php require_once('../includes/footer.php'); ?>

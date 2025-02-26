@@ -178,6 +178,19 @@ class Article{
     }
 
     /**
+     * 取得總共的紀錄筆數
+     * 
+     * @param object $conn 連接資料庫
+     * 
+     * @return integer 總共的紀錄筆數
+     */
+    public static function getTotal($conn){
+ 
+        return $conn->query("SELECT COUNT(*) FROM article")->fetchColumn();
+
+    }
+
+    /**
      * 刪除文章
      * 
      * @param object $conn 連接資料庫
