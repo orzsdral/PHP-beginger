@@ -77,17 +77,31 @@ Auth::requireLogin();
             //過濾檔名(允許顯示字元,取代非允許字元,檔名)
             $base = preg_replace('/[^a-zA-Z0-9_-]/', '_', $base);
 
+            //限制檔名長度
+            $base = mb_substr($base, 0, 200);
+
             //組合檔名
             $filename = $base . "." . $pathinfo['extension'];
 
             //設定目的地
             $destination = "../uploads/$filename";
-            
-
-            
+            $i = 1;
+            //檢查目標位置是否已存在相關檔案
+            While (file_exists($destination)){
+                //組合檔名
+                $filename = $base . "-$i." . $pathinfo['extension'];
+                $destination = "../uploads/$filename";
+                $i++;
+            }
+        
             //移動檔案
             if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)){
-                echo "檔案上傳成功";
+               if ($article->setImageFile($conn, $filename)){
+
+                    Url::redirect("/PHP-beginger/admin/edit-article.php?id={$article->id}");
+
+               }
+               
             }else {
                 throw new Exception('檔案上傳失敗');
             }

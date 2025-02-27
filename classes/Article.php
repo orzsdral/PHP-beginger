@@ -32,7 +32,11 @@ class Article{
     */
     public $errors = [];
 
-
+    /**
+     * 圖片路徑
+     * $image_file
+     */
+    public $image_file;
     /** 
      * 藉由ID得到文章
      * 
@@ -237,6 +241,26 @@ class Article{
         } else {
             return false;
         }
+    }
+
+    /**
+     * 上傳圖片檔屬性
+     * 
+     * @param object $conn 連接資料庫
+     * @param string $image_file 圖片檔名
+     * 
+     * @return boolean 是否成功更新
+     */
+    public function setImageFile($conn, $image_file){
+        $sql = "UPDATE article
+                SET image_file = :image_file
+                WHERE id = :id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindValue(':image_file', $image_file, PDO::PARAM_STR);
+
+        return $stmt->execute();
     }
 
 
