@@ -66,9 +66,24 @@ Auth::requireLogin();
             }
 
 
+            
+
+            //取得檔案資訊
+            $pathinfo = pathinfo($_FILES['file']['name']);
+            
+            //取得檔名
+            $base = $pathinfo['filename'];  
+            
+            //過濾檔名(允許顯示字元,取代非允許字元,檔名)
+            $base = preg_replace('/[^a-zA-Z0-9_-]/', '_', $base);
+
+            //組合檔名
+            $filename = $base . "." . $pathinfo['extension'];
+
+            //設定目的地
+            $destination = "../uploads/$filename";
+            
             //移動檔案
-            $destination = "../uploads/" . $_FILES['file']['name'];
-        
             if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)){
                 echo "檔案上傳成功";
             }else {
