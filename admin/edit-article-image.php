@@ -83,6 +83,8 @@ Auth::requireLogin();
             //設定目的地
             $destination = "../uploads/$filename";
             
+
+            
             //移動檔案
             if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)){
                 echo "檔案上傳成功";
