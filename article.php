@@ -24,6 +24,11 @@ require_once("includes/init.php");
         <?php if($articles): ?>
                 <article>
                     <h2><?= htmlspecialchars($articles->title) ?></h2>
+
+                    <!-- <?php if ($articles->image_file): ?> -->
+                    <img src="uploads/<?= $articles->image_file ?>">
+                    <!-- <?php endif;?> -->
+
                     <p><?= htmlspecialchars($articles->content) ?></p>
                 </article>
       

@@ -25,6 +25,11 @@ Auth::requireLogin();
         <?php if($articles): ?>
                 <article>
                     <h2><?= htmlspecialchars($articles->title) ?></h2>
+
+                    <?php if ($articles->image_file): ?>
+                        <img src="../uploads/<?= $articles->image_file ?>">
+                    <?php endif;?>
+
                     <p><?= htmlspecialchars($articles->content) ?></p>
                 </article>
                 <a href="edit-article.php?id=<?= $articles->id;?>">編輯文章</a>

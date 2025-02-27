@@ -7,9 +7,9 @@ Auth::requireLogin();
     //有改用準備語句，所以可去除is_numeric()判斷
     if(isset($_GET['id'])){
         //取得文章
-        $article = Article::getByID($conn, $_GET['id']);
+        $articles = Article::getByID($conn, $_GET['id']);
 
-        if (!$article){
+        if (!$articles){
           die("文章未發現");
         }
  
@@ -93,12 +93,12 @@ Auth::requireLogin();
                 $destination = "../uploads/$filename";
                 $i++;
             }
-        
+            echo "test";
             //移動檔案
             if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)){
-               if ($article->setImageFile($conn, $filename)){
+               if ($articles->setImageFile($conn, $filename)){
 
-                    Url::redirect("/PHP-beginger/admin/edit-article.php?id={$article->id}");
+                    Url::redirect("/PHP-beginger/admin/edit-article.php?id={$articles->id}");
 
                }
                
@@ -114,7 +114,14 @@ Auth::requireLogin();
 
 require_once('../includes/header.php');
     echo "<h2>編輯文章圖片</h2>";
+    if ($articles->image_file){
+      echo 
+      "<img src=\"../uploads/$articles->image_file\">";
+    }
+
 echo <<<END
+    
+    
     <form method="post" enctype="multipart/form-data">
         <div>
             <label for="file">圖片</label>
