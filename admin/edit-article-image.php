@@ -96,9 +96,16 @@ Auth::requireLogin();
             echo "test";
             //移動檔案
             if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)){
-               if ($articles->setImageFile($conn, $filename)){
+                //更新資料庫
+                if ($articles->setImageFile($conn, $filename)){
+                    //取得舊圖片檔名
+                    $previous_image = $articles->image_file;
+                    if ($previous_image){
+                        //刪除圖片檔案
+                        unlink("../uploads/$previous_image");
+                    }
 
-                    Url::redirect("/PHP-beginger/admin/edit-article.php?id={$articles->id}");
+                    Url::redirect("/PHP-beginger/admin/edit-article-image.php?id={$articles->id}");
 
                }
                
