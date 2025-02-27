@@ -28,7 +28,7 @@ Auth::requireLogin();
             {
                 throw new Exception('無效上傳');
             }
-            
+
             //檢查檔案上傳是否成功
             switch ($_FILES['file']['error']) {
                     case UPLOAD_ERR_OK:
@@ -42,8 +42,28 @@ Auth::requireLogin();
                         break;
                     default:
                         throw new Exception('其他錯誤');
-                     
             } 
+
+            //限制檔案大小
+            if($_FILES['file']['size'] > 1000000){
+                throw new Exception('檔案過大');
+            }
+
+            //限制檔案類型
+            $mime_types = [
+                'image/gif' => '.gif',
+                'image/jpeg' => '.jpg',
+                'image/png' => '.png',
+            ];
+
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime_type = finfo_file($finfo, $_FILES['file']['tmp_name']);
+
+            if (!in_array($mime_type, $mime_types)){
+                throw new Exception('檔案類型不允許');
+            }
+
+
         }catch(Exception $e){
             die($e->getMessage());
         }
