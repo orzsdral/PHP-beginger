@@ -20,7 +20,7 @@ Auth::requireLogin();
 
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
-       var_dump($_FILES);
+       
        try{
             //跟post_max_size有關
             if(empty($_FILES))
@@ -93,7 +93,7 @@ Auth::requireLogin();
                 $destination = "../uploads/$filename";
                 $i++;
             }
-            echo "test";
+           
             //移動檔案
             if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)){
                 //更新資料庫
@@ -115,7 +115,7 @@ Auth::requireLogin();
 
 
         }catch(Exception $e){
-            die($e->getMessage());
+            $error = $e->getMessage();
         }
     }
 
@@ -124,6 +124,12 @@ require_once('../includes/header.php');
     if ($articles->image_file){
       echo 
       "<img src=\"../uploads/$articles->image_file\">";
+      echo
+      "<a href=\"delete-article-image.php?id= $articles->id\">刪除圖片</a>";
+    }
+
+    if (isset($error)){
+        echo "<p>$error</p>";
     }
 
 echo <<<END
