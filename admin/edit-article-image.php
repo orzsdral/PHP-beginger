@@ -20,7 +20,6 @@ Auth::requireLogin();
 
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
-           
        var_dump($_FILES);
        try{
             //跟post_max_size有關
@@ -43,24 +42,37 @@ Auth::requireLogin();
                     default:
                         throw new Exception('其他錯誤');
             } 
-
+            
             //限制檔案大小
             if($_FILES['file']['size'] > 1000000){
                 throw new Exception('檔案過大');
             }
-
+            
             //限制檔案類型
             $mime_types = [
                 'image/gif' => '.gif',
                 'image/jpeg' => '.jpg',
                 'image/png' => '.png',
             ];
+           
+           
 
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $mime_type = finfo_file($finfo, $_FILES['file']['tmp_name']);
+            //$finfo = finfo_open(FILEINFO_MIME_TYPE);
+            //$mime_type = finfo_file($finfo, $_FILES['file']['tmp_name']);
+            
+            //if (!in_array($mime_type, $mime_types)){
+            if( !array_key_exists($_FILES['file']['type'], $mime_types)){
+                throw new Exception('無效類型');
+            }
 
-            if (!in_array($mime_type, $mime_types)){
-                throw new Exception('檔案類型不允許');
+
+            //移動檔案
+            $destination = "../uploads/" . $_FILES['file']['name'];
+        
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)){
+                echo "檔案上傳成功";
+            }else {
+                throw new Exception('檔案上傳失敗');
             }
 
 
