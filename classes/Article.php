@@ -172,12 +172,20 @@ class Article{
     public function setCategories($conn, $ids){
         if ($ids){
             $sql = "INSERT IGNORE INTO article_category (article_id, category_id)
-                    VALUES ({$this->id}, :category_id)";
-
-            $stmt = $conn->prepare($sql);
-
+                    VALUES ";
+            //建立一個空陣列
+            $values = [];
+            //將每個ID加入陣列
             foreach($ids as $id){
-                $stmt->bindValue(':category_id', $id, PDO::PARAM_INT);
+                $values[] = "($this->id, $id)";
+            }
+            //將陣列轉換成字串並用逗號分隔
+            $sql .= implode(',', $values);
+        
+            $stmt = $conn->prepare($sql);
+            
+            foreach($ids as $i => $id){
+                $stmt->bindValue($i + 1, $id, PDO::PARAM_INT);
                 $stmt->execute();
             }
         }
