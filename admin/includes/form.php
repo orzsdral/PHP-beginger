@@ -33,6 +33,17 @@
         </label>
     </div>
     <br>
+    <fieldset>
+        <legend>Category</legend>
+        <?php foreach($categories as $category): ?>
+            <div>
+                <input type="checkbox" name="category[]" value="<?= $category['id'] ?>" id="category_<?= $category['id'] ?>"
+                <?php if(in_array($category['id'], $category_ids)) echo 'checked'; ?>>
+                <label for="category<?= $category['id']?>"><?= htmlspecialchars($category['name'])?></label>
+            </div>
+        <?php endforeach; ?>
+    </fieldset>
+
 
     <div>
         <button>保存</button>

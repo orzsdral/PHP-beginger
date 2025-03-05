@@ -16,8 +16,10 @@ Auth::requireLogin();
     }else{
         die("id 不存在, 文章未發現");
     }
-
-    var_dump($article->getCategories($conn));
+    //取得文章的種類單id的所有資料
+    $category_ids = array_column($article->getCategories($conn), 'id');
+    $categories = Category::getAll($conn);
+  
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
            
         //取得表單資料
