@@ -33,7 +33,7 @@ Auth::requireLogin();
                     <p><?= htmlspecialchars($articles->content) ?></p>
                 </article>
                 <a href="edit-article.php?id=<?= $articles->id;?>">編輯文章</a>
-                <a href="delete-article.php?id=<?= $articles->id;?>">刪除文章</a>
+                <a class="delete" href="delete-article.php?id=<?= $articles->id;?>">刪除文章</a>
                 <a href="edit-article-image.php?id=<?= $articles->id;?>">編輯圖片</a>
                
         <?php else: ?>

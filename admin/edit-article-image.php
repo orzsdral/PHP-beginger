@@ -125,7 +125,7 @@ require_once('../includes/header.php');
       echo 
       "<img src=\"../uploads/$articles->image_file\">";
       echo
-      "<a href=\"delete-article-image.php?id= $articles->id\">刪除圖片</a>";
+      "<a class='delete' href=\"delete-article-image.php?id= $articles->id\">刪除圖片</a>";
     }
 
     if (isset($error)){
