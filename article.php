@@ -1,4 +1,6 @@
 <?php
+
+
 //改成自動加載
 require_once("includes/init.php");
    
@@ -9,11 +11,12 @@ require_once("includes/init.php");
         //取得文章
         //$articles = getArticle($conn, $_GET['id']);
         //改用類別函數
-        $articles = Article::getByID($conn, $_GET['id']);
+        $articles = Article::getWithCategories($conn, $_GET['id']);
     }else{
         //若沒有id值或id值不是數字則顯示null
         $articles = null;
     }
+
 ?>
 <?php require_once('includes/header.php'); ?>
 
@@ -23,13 +26,21 @@ require_once("includes/init.php");
         <!-- 加入判斷如果數組是空的不能顯示///因改使用mysqli_fetch_assoc()若回傳無值會顯null因此更換判斷條件 -->
         <?php if($articles): ?>
                 <article>
-                    <h2><?= htmlspecialchars($articles->title) ?></h2>
+                    <h2><?= htmlspecialchars($articles[0]['title']) ?></h2>
 
-                    <?php if ($articles->image_file): ?>
-                        <img src="uploads/<?= $articles->image_file ?>">
+                    <?php if ($articles[0]['category_name']): ?>
+                        <p>Categories: 
+                            <?php foreach($articles as $a): ?>
+                                <?= htmlspecialchars($a['category_name']) ?>
+                            <?php endforeach; ?>
+                        </p>
                     <?php endif;?>
 
-                    <p><?= htmlspecialchars($articles->content) ?></p>
+                    <?php if ($articles[0]['image_file']): ?>
+                        <img src="uploads/<?= $articles[0]['image_file'] ?>">
+                    <?php endif;?>
+
+                    <p><?= htmlspecialchars($articles[0]['content']) ?></p>
                 </article>
       
                

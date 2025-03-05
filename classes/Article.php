@@ -118,6 +118,30 @@ class Article{
         }
     }
 
+    /**
+     * 藉由ID獲取文章記錄，使用關聯category表
+     * 
+     * @param object $conn 連接資料庫
+     * @param integer $id 文章 ID
+     * 
+     * @return array 一個包含文章記錄資料的聯想陣列
+     */
+    public static function getWithCategories($conn, $id){
+        $sql = "SELECT article.*,category.name as category_name
+                FROM article
+                LEFT JOIN article_category
+                ON article.id = article_category.article_id
+                LEFT JOIN category
+                ON article_category.category_id = category.id
+                WHERE article.id = :id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     /** 
      * 更新文章 --使用現在屬性值
      * 
