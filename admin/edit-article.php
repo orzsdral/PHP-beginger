@@ -12,13 +12,12 @@ Auth::requireLogin();
         if (!$article){
           die("文章未發現");
         }
- 
       
     }else{
         die("id 不存在, 文章未發現");
     }
 
-
+    var_dump($article->getCategories($conn));
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
            
         //取得表單資料

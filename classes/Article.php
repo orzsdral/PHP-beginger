@@ -141,6 +141,25 @@ class Article{
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    /**
+     * 取得文章的分類
+     * @param object $conn 連接資料庫
+     * 
+     * @return array 一個包含文章分類的聯想陣列
+     */
+    public function getCategories($conn){
+        $sql = "SELECT category.*
+                FROM category
+                JOIN article_category
+                ON category.id = article_category.category_id
+                WHERE article_id = :id";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     /** 
      * 更新文章 --使用現在屬性值
