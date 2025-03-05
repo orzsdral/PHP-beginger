@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 //改成自動加載
 require_once("../includes/init.php");
 Auth::requireLogin();
@@ -26,10 +29,15 @@ Auth::requireLogin();
         $article->title = $_POST['title'];
         $article->content = $_POST['content'];
         $article->published_at = $_POST['published_at'];
-        
-        //驗證改由物件內部處理
-                
+
+        $category_ids = $_POST['category']??[];
+       
+
+        //驗證改由物件內部處理  
         if($article->updateArticle($conn)){
+            
+            $article->setCategories($conn, $category_ids);
+
             Url::redirect("/PHP-beginger/admin/article.php?id={$article->id}");
         }
     }

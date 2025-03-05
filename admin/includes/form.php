@@ -37,7 +37,7 @@
         <legend>Category</legend>
         <?php foreach($categories as $category): ?>
             <div>
-                <input type="checkbox" name="category[]" value="<?= $category['id'] ?>" id="category_<?= $category['id'] ?>"
+                <input type="checkbox" name="category[]" value="<?= $category['id'] ?>" id="category<?= $category['id'] ?>"
                 <?php if(in_array($category['id'], $category_ids)) echo 'checked'; ?>>
                 <label for="category<?= $category['id']?>"><?= htmlspecialchars($category['name'])?></label>
             </div>
