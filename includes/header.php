@@ -20,6 +20,8 @@
             <?php else:?>
                 <li><a href="/PHP-beginger/login.php">登入</a></li>
             <?php endif;?>
+
+            <li><a href="/PHP-beginger/contact.php">聯絡我們</a></li>
         </ul>
 
     </nav>

@@ -177,7 +177,7 @@ class Article{
             $values = [];
             //將每個ID加入陣列
             foreach($ids as $id){
-                $values[] = "($this->id, $id)";
+                $values[] = "({$this->id}, $id)";
             }
             //將陣列轉換成字串並用逗號分隔
             $sql .= implode(',', $values);
@@ -186,9 +186,10 @@ class Article{
             
             foreach($ids as $i => $id){
                 $stmt->bindValue($i + 1, $id, PDO::PARAM_INT);
-                $stmt->execute();
             }
+            $stmt->execute();
         }
+     
     }
 
     /** 
