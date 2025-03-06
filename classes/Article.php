@@ -177,10 +177,10 @@ class Article{
             $values = [];
             //將每個ID加入陣列
             foreach($ids as $id){
-                $values[] = "({$this->id}, $id)";
+                $values[] = "({$this->id}, ?)";
             }
             //將陣列轉換成字串並用逗號分隔
-            $sql .= implode(',', $values);
+            $sql .=  implode(',', $values);
         
             $stmt = $conn->prepare($sql);
             
@@ -189,7 +189,20 @@ class Article{
             }
             $stmt->execute();
         }
-     
+
+        $sql = "DELETE FROM article_category
+                WHERE article_id = {$this->id}";
+        
+        if ($ids){
+            $placeholders = array_fill(0, count($ids), '?');
+            $sql .= " AND category_id NOT IN (" . implode(',', $placeholders) . ")";
+        }
+        $stmt = $conn->prepare($sql);
+
+        foreach($ids as $i => $id){
+            $stmt->bindValue($i + 1, $id, PDO::PARAM_INT);
+        }
+        $stmt->execute();
     }
 
     /** 
