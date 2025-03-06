@@ -60,26 +60,53 @@ class Article{
      * 取得分頁的文章數
      * 
      * @param object $conn 連接資料庫
-     * @param integer $limet 紀錄筆數
+     * @param integer $limit 紀錄筆數
      * @param integer $offset 略過幾筆
      *
      * @return array 回傳幾筆文章聯想陣列範圍
      */
 
-    public static function getPage($conn, $limet, $offset){
-        $sql = "SELECT * 
+    public static function getPage($conn, $limit, $offset){
+        $sql = "SELECT a.*, category.name AS category_name
+                FROM (SELECT * 
                 FROM article
                 ORDER BY published_at
-                LIMIT :limet
-                OFFSET :offset";
+                LIMIT :limit
+                OFFSET :offset) AS a
+                LEFT JOIN article_category
+                ON a.id = article_category.article_id
+                LEFT JOIN category
+                ON article_category.category_id = category.id";
 
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':limet', $limet, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 
         $stmt->execute();
 
-        return $stmt->fetchALL(PDO::FETCH_ASSOC);
+        $results = $stmt->fetchALL(PDO::FETCH_ASSOC);
+
+        $articles = [];
+
+        $previous_id = null;
+
+        foreach ($results as $row){
+
+            $article_id = $row['id'];
+
+            if ($article_id != $previous_id){
+               $row['category_names'] = [];
+                $articles[$article_id] = $row;
+            }
+
+            $articles[$article_id]['category_names'][] = $row['category_name'];
+
+            $previous_id = $article_id;
+            
+            
+        }
+
+        return $articles;
     }
 
 
