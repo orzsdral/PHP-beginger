@@ -12,18 +12,31 @@ Auth::requireLogin();
 
 
     $article = new Article();
+
+    //取得文章的種類單id的所有資料
+    $category_ids = [];
+
+    $conn = require_once('../includes/db.php');
+
+    $categories = Category::getAll($conn);
+     
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
            
-        $conn = require_once('../includes/db.php');
+       
 
         //取得表單資料
         $article->title = $_POST['title'];
         $article->content = $_POST['content'];
         $article->published_at = $_POST['published_at'];
+
+        $category_ids = $_POST['category']??[];
         
         //驗證改由物件內部處理
                 
         if($article->createArticle($conn)){
+
+            $article->setCategories($conn, $category_ids);
+            
             Url::redirect("/PHP-beginger/admin/article.php?id={$article->id}");
         }
        
