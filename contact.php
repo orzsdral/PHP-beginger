@@ -1,9 +1,19 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHP-beginger/vendor/PHPMailer/src/Exception.php';
+require 'PHP-beginger/vendor/PHPMailer/src/PHPMailer.php';
+require 'PHP-beginger/vendor/PHPMailer/src/SMTP.php';
+
+
 require 'includes/init.php';
 
 $email = '';
 $subject = '';
 $content = '';
+
+$sent = false;
 
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     $email = $_POST['email'];
@@ -25,7 +35,29 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     }
 
     if (empty($errors)) {
+        $mail = new PHPMailer(true);
 
+        try{
+            $mail->isSMTP();  //告訴PHPMailer使用SMTP
+            $mail->Host = ''; //告訴PHPMailer伺服器位置
+            $mail->SMTPAuth = true;  //告訴PHPMailer需要身分驗證
+            $mail->Username = 'username'; //設置帳號
+            $mail->Password = 'password'; //設置密碼
+            $mail->SMTPSecure = 'tls'; //身分驗證類ㄧ
+            $mail->Port = 587;  //port
+            
+            $mail->setFrom('sender@daveh.io');//設寄信者
+            $mail->addAddress('reciptin@daveh.io');//設定收件者
+            $mail->addReplyTo($email); //設定回覆地址
+            $mail->Subject = $dubject; //設定主旨
+            $mail->Body = $content;  //設定內文
+            
+            $mail->send(); //寄信
+            
+            echo "已寄出";
+        } catch (Exception $e){
+            $errors[] = $mail->ErrorInfo;
+        }
     }
 
 }
@@ -36,6 +68,12 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 <?php require 'includes/header.php'; ?>
 
 <h2>聯絡我們</h2>
+
+<?php if($sent): ?>
+    <div class="alert alert-success">已寄出</div>
+<?php else: ?>
+    <div class="alert alert-danger">無法寄出</div>
+<?php endif; ?>
 
 <?php if(!empty($errors)): ?>
     <ul>
