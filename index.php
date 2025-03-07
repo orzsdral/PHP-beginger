@@ -33,7 +33,7 @@ require_once("includes/init.php");
         <?php if(empty($articles)): ?>
             No articles found.
         <?php else: ?>
-            <ol>
+            <ol id="index">
                 <?php foreach($articles as $article): ?>
                     
                     <li>
