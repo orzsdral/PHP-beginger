@@ -29,7 +29,7 @@
         <label for="published_at">
             <!-- 因要練習邏輯需要 先移除前端required來增強後端卡控 -->
              <!-- 設定$published_at保留直 -->
-            <input class="form-control" type="datetime" name="published_at" id="published_at" value="<?= htmlspecialchars($article->published_at)?>">
+            <input class="form-control" name="published_at" id="published_at" value="<?= htmlspecialchars($article->published_at)?>">
         </label>
     </div>
     <br>
