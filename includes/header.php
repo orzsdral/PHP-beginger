@@ -15,15 +15,15 @@
  
     <nav>
         <ul class="nav">
-            <li class="nav-item"><a href="/PHP-beginger/">首頁</a></li>
+            <li class="nav-item"><a class="nav-link" href="/PHP-beginger/">首頁</a></li>
             <?php if (Auth::isLoggedIn()) :?>
-                <li class="nav-item"><a href="/PHP-beginger/admin/">管理者介面</a></li>
-                <li class="nav-item"><a href="/PHP-beginger/logout.php">登出</a></li>
+                <li class="nav-item"><a class="nav-link" href="/PHP-beginger/admin/">管理者介面</a></li>
+                <li class="nav-item"><a class="nav-link" href="/PHP-beginger/logout.php">登出</a></li>
             <?php else:?>
-                <li class="nav-item"><a href="/PHP-beginger/login.php">登入</a></li>
+                <li class="nav-item"><a class="nav-link" href="/PHP-beginger/login.php">登入</a></li>
             <?php endif;?>
 
-            <li class="nav-item"><a href="/PHP-beginger/contact.php">聯絡我們</a></li>
+            <li class="nav-item"><a class="nav-link" href="/PHP-beginger/contact.php">聯絡我們</a></li>
         </ul>
 
     </nav>
