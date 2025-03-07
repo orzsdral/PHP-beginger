@@ -7,10 +7,10 @@ Auth::requireLogin();
    $conn = require_once('../includes/db.php');
 
 
-   $paginator = new Paginator($_GET['page'] ?? 1, 6, Article::getTotal($conn));
+   $paginator = new Paginator($_GET['page'] ?? 1, 6, Article::getTotal($conn, true));
 
    //取得所有文章
-   $articles = Article::getPage($conn, $paginator->limit,  $paginator->offset);
+   $articles = Article::getPage($conn, $paginator->limit,  $paginator->offset, true);
 ?>
 <?php require_once('../includes/header.php'); ?>
        

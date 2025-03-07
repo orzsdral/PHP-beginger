@@ -19,10 +19,10 @@ require_once("includes/init.php");
     //$paginator = new Paginator(isset($_GET['page']) ? $_GET['page'] : 1, 4);
 
     //3.Null coalescing operator寫法
-    $paginator = new Paginator($_GET['page'] ?? 1, 4, Article::getTotal($conn));
+    $paginator = new Paginator($_GET['page'] ?? 1, 4, Article::getTotal($conn, true));
 
      //取得所有文章
-     $articles = Article::getPage($conn, $paginator->limit,  $paginator->offset);
+     $articles = Article::getPage($conn, $paginator->limit,  $paginator->offset, true);
   
    
 ?>

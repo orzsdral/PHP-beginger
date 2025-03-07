@@ -66,10 +66,14 @@ class Article{
      * @return array 回傳幾筆文章聯想陣列範圍
      */
 
-    public static function getPage($conn, $limit, $offset){
+    public static function getPage($conn, $limit, $offset, $only_published){
+        
+       $condition = $only_published ? 'WHERE published_at IS NOT NULL' : '';
+
         $sql = "SELECT a.*, category.name AS category_name
                 FROM (SELECT * 
                 FROM article
+                $condition
                 ORDER BY published_at
                 LIMIT :limit
                 OFFSET :offset) AS a
@@ -306,9 +310,9 @@ class Article{
      * 
      * @return integer 總共的紀錄筆數
      */
-    public static function getTotal($conn){
- 
-        return $conn->query("SELECT COUNT(*) FROM article")->fetchColumn();
+    public static function getTotal($conn, $only_published = false){
+        $condition = $only_published ? 'WHERE published_at IS NOT NULL' : '';
+        return $conn->query("SELECT COUNT(*) FROM article $condition")->fetchColumn();
 
     }
 
