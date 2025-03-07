@@ -28,6 +28,13 @@ require_once("includes/init.php");
                 <article>
                     <h2><?= htmlspecialchars($articles[0]['title']) ?></h2>
 
+                    <time datetime="<?= $articles[0]['published_at'] ?>">
+                        <?php
+                            $datetime = new DateTime($articles['published_at']);
+                            echo $datetime->format('F j, Y');
+                        ?>
+                    </time>
+
                     <?php if ($articles[0]['category_name']): ?>
                         <p>Categories: 
                             <?php foreach($articles as $a): ?>
