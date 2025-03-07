@@ -24,17 +24,18 @@ if (!empty($error)){
     echo "<p>{$error}</p>";
 }
 echo <<<_END
-    <h2>Login</h2>
+    <h2>登入</h2>
     <form method="post" action="login.php">
-        <div>
+        <div class="form-group">
             <label for="username">帳號:</label>
             <input type="text" name="username" id="username">
         </div>
-        <div>
+        <div class="form-group">
             <label for="password">密碼:</label>
             <input type="password" name="password" id="password">
         </div>
-        <input type="submit" value="Login">
+        
+        <button class="btn">登入</button>
     </form>
     _END;
 

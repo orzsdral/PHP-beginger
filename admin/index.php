@@ -23,7 +23,7 @@ Auth::requireLogin();
             No articles found.
         <?php else: ?>
         
-            <table>
+            <table class="table">
                 <thead>
                     <th>標題</th>
                     <th>發佈日期</th>
