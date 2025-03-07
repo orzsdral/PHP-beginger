@@ -15,3 +15,38 @@ $('a.delete').on('click', function(e) {
         frm.submit();
     }
 });
+
+//沒有內置驗證，用addMethod添加自定義驗證
+$.validator.addMethod("dateTime", function(value, element){
+    return (value == "") || ! isNaN(Date.parse(value));
+}, "Must be a valid date and time");
+
+
+$('#formArticle').validate({
+    rules:{
+        title:{
+            required: true
+        },
+        content:{
+            required: true
+        },
+        published_at:{
+            dateTime: true
+        }
+    }
+
+});
+
+$("button.publish").on('click', function(e){
+    var id = $(this).data('id');
+    var button = $(this);
+
+    $.ajax({
+        url: '/admin/publishing-article.php',
+        type: 'POST',
+        data:{id: id},
+    })
+    .done(function(data){
+        button.parent().html(data);
+    })
+});

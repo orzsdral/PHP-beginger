@@ -385,5 +385,28 @@ class Article{
         return $stmt->execute();
     }
 
+    /**
+     * 發佈文章,設定發佈時間
+     * 
+     * @param object $conn 連接資料庫
+     * 
+     * @return 如果成功顯示日期時間,否則null否則null
+     */
 
+    public function publish($conn){
+        $sql = "UPDATE article
+                SET published_at = :published_at
+                WHERE id = :id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $published_at = date('Y-m-d H:i:s');
+        $stmt->bindValue(':published_at',  $published_at, PDO::PARAM_STR);
+
+        if ($stmt->execute()){
+            return $published_at;
+        } else {
+            return null;
+        }
+    }
 }

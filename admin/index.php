@@ -39,6 +39,7 @@ Auth::requireLogin();
                                     <time><?= $article['published_at']?></time>
                                 <?php else: ?>
                                     <em>尚未發佈</em>
+                                    <button class="publish" data-id="<?= $article['id']?>">發佈</button>
                                 <?php endif; ?>
                             </td>
                         </tr>

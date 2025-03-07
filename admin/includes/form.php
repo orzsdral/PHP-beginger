@@ -1,4 +1,4 @@
-<form method="post">
+<form method="post" id="formArticle">
         <!-- 若有錯誤訊息，則顯示 -->
     <?php if(!empty($article->errors)): ?>
         <ul>
