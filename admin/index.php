@@ -10,7 +10,7 @@ Auth::requireLogin();
    $paginator = new Paginator($_GET['page'] ?? 1, 6, Article::getTotal($conn, true));
 
    //取得所有文章
-   $articles = Article::getPage($conn, $paginator->limit,  $paginator->offset, true);
+   $articles = Article::getPage($conn, $paginator->limit,  $paginator->offset, false);
 ?>
 <?php require_once('../includes/header.php'); ?>
        
@@ -26,12 +26,20 @@ Auth::requireLogin();
             <table>
                 <thead>
                     <th>標題</th>
+                    <th>發佈日期</th>
                 </thead>
                 <tbody>
                     <?php foreach($articles as $article): ?>
                         <tr>
                             <td>
                                 <a <?= "href=article.php?id={$article['id']}"; ?>><?= htmlspecialchars($article['title']) ?></a>
+                            </td>
+                            <td>
+                                <?php if ($article['published_at']):?>
+                                    <time><?= $article['published_at']?></time>
+                                <?php else: ?>
+                                    <em>尚未發佈</em>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

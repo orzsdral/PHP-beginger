@@ -26,6 +26,12 @@ Auth::requireLogin();
                 <article>
                     <h2><?= htmlspecialchars($articles[0]['title']) ?></h2>
 
+                    <?php if ($articles[0]['published_at']):?>
+                        <time><?= $articles[0]['published_at']?></time>
+                    <?php else: ?>
+                        <em>尚未發佈</em>
+                    <?php endif; ?>
+
                     <?php if ($articles[0]['category_name']): ?>
                         <p>Categories: 
                             <?php foreach($articles as $a): ?>
