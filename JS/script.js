@@ -51,6 +51,24 @@ $("button.publish").on('click', function(e){
     })
 });
 
+/**
+ * 展示日期時間選擇器
+ */
 $('#published_at').datetimepicker({
     format: 'Y-m-d H:i:s'
+});
+
+$('#formContact').validate({
+    rules:{
+        email:{
+            required: true,
+            email: true
+        },
+        subject:{
+            required: true
+        },
+        content:{
+            required: true
+        }
+    }
 });

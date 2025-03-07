@@ -46,24 +46,24 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 <?php endif; ?>
 
 <form method="post" id="formContact">
-    <div>
+    <div class="form-group">
         <label>Email:
-            <input type="email" name="email" placeholder="請輸入您的Email" value="<?= htmlspecialchars($email)?>" >
+            <input class="form-control" type="email" name="email" placeholder="請輸入您的Email" value="<?= htmlspecialchars($email)?>" >
         </label>
     </div>
 
-    <div>
+    <div class="form-group">
         <label>主旨:
-            <input type="text" name="subject" placeholder="請輸入主旨" value="<?= htmlspecialchars($subject)?>" >
+            <input class="form-control" type="text" name="subject" placeholder="請輸入主旨" value="<?= htmlspecialchars($subject)?>" >
         </label>
     </div>
 
-    <div>
+    <div class="form-group">
         <label>內容:
-            <textarea name="content" placeholder="請輸入內容"  rows="30" cols="100"  ><?= htmlspecialchars($conect)?></textarea>
+            <textarea class="form-control" name="content" placeholder="請輸入內容"  rows="30" cols="100"  ><?= htmlspecialchars($content)?></textarea>
         </label>
     </div>
     
-    <button type="submit">送出</button>
+    <button class="btn btn-primary">送出</button>
 </form>
 <?php require 'includes/footer.php'; ?>
