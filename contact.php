@@ -72,16 +72,16 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 <?php if($sent): ?>
     <div class="alert alert-success">已寄出</div>
 <?php else: ?>
-    <div class="alert alert-danger">無法寄出</div>
-<?php endif; ?>
-
-<?php if(!empty($errors)): ?>
+    <?php if(!empty($errors)): ?>
     <ul>
         <?php foreach($errors as $error): ?>
             <li><?= $error; ?></li>
         <?php endforeach; ?>
     </ul>
 <?php endif; ?>
+<?php endif; ?>
+
+
 
 <form method="post" id="formContact">
     <div class="form-group">
