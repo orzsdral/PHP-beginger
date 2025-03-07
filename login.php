@@ -35,7 +35,7 @@ echo <<<_END
             <input type="password" name="password" id="password">
         </div>
         
-        <button class="btn">登入</button>
+        <button class="btn btn-primary">登入</button>
     </form>
     _END;
 
