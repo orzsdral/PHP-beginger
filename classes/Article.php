@@ -153,7 +153,7 @@ class Article{
      * 
      * @return array 一個包含文章記錄資料的聯想陣列
      */
-    public static function getWithCategories($conn, $id){
+    public static function getWithCategories($conn, $id, $only_published = false){
         $sql = "SELECT article.*,category.name as category_name
                 FROM article
                 LEFT JOIN article_category
@@ -161,6 +161,10 @@ class Article{
                 LEFT JOIN category
                 ON article_category.category_id = category.id
                 WHERE article.id = :id";
+
+        if ($only_published){
+            $sql .= " AND article.published_at IS NOT NULL";
+        }
 
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);

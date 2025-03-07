@@ -11,7 +11,7 @@ require_once("includes/init.php");
         //取得文章
         //$articles = getArticle($conn, $_GET['id']);
         //改用類別函數
-        $articles = Article::getWithCategories($conn, $_GET['id']);
+        $articles = Article::getWithCategories($conn, $_GET['id'], true);
     }else{
         //若沒有id值或id值不是數字則顯示null
         $articles = null;
