@@ -9,3 +9,6 @@ define('DB_PASS', 'LIN');
 define('SMTP_HOST', 'smtp.gmail.com');
 define('SMTP_USER', 'user@example.com');
 define('SMTP_PASS', 'password');
+
+//是否開啟偵錯
+define('SHOW_ERROR_FETAIL', true);
