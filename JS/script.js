@@ -42,12 +42,15 @@ $("button.publish").on('click', function(e){
     var button = $(this);
 
     $.ajax({
-        url: '/admin/publishing-article.php',
+        url: '/PHP-beginger/admin/publishing-article.php',
         type: 'POST',
         data:{id: id},
     })
     .done(function(data){
         button.parent().html(data);
+    })
+    .fail(function(data){
+        alert("An error occurred");
     })
 });
 
