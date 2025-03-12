@@ -12,3 +12,5 @@ spl_autoload_register(function($class){
 });
 
 session_start();
+
+require dirname(__DIR__) . '/config.php';

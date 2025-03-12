@@ -39,10 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
         try{
             $mail->isSMTP();  //告訴PHPMailer使用SMTP
-            $mail->Host = ''; //告訴PHPMailer伺服器位置
+            $mail->Host = SMTP_HOST; //告訴PHPMailer伺服器位置
             $mail->SMTPAuth = true;  //告訴PHPMailer需要身分驗證
-            $mail->Username = 'username'; //設置帳號
-            $mail->Password = 'password'; //設置密碼
+            $mail->Username = SMTP_USER; //設置帳號
+            $mail->Password = SMTP_PASS; //設置密碼
             $mail->SMTPSecure = 'tls'; //身分驗證類ㄧ
             $mail->Port = 587;  //port
             
